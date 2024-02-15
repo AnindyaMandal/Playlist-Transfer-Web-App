@@ -2,32 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@media (prefers-color-scheme: dark) {
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.home {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	margin: auto;
+	padding: 5%;
+}
+
+.spotify_auth_btn {
+	padding-top: 0.625rem;
+	padding-bottom: 0.625rem;
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
+	margin-bottom: 0.5rem;
+	border-radius: 0.5rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	font-weight: 500;
+	color: #ffffff;
+	background-color: #047857;
+}
+.spotify_auth_btn:hover {
+	background-color: #065f46;
+}
+
+.youtube_auth_btn {
+	padding-top: 0.625rem;
+	padding-bottom: 0.625rem;
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
+	margin-bottom: 0.5rem;
+	border-radius: 0.5rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	font-weight: 500;
+	color: #ffffff;
+	background-color: #b91c1c;
+}
+.youtube_auth_btn:hover {
+	background-color: #991b1b;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	color: rgb(var(--foreground-rgb));
+	background: linear-gradient(
+			to bottom,
+			transparent,
+			rgb(var(--background-end-rgb))
+		)
+		rgb(var(--background-start-rgb));
 }
