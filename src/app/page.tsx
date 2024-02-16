@@ -1,17 +1,19 @@
-// "use client";
-// import Spotify from "@/components/Spotify";
-// import Youtube from "@/components/Youtube";
-// import { getSpotifyAuth } from "./spotifyAuth";
 import Link from "next/link";
-// import { useEffect, useState } from "react";
 import { options } from "./api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
+import { SpotifyWebApi } from "./lib/spotifyWebApi";
+import SpotifyPlaylistItem from "@/components/SpotifyPlaylistItem";
 
 export default async function Home() {
 	const session = await getServerSession(options);
+	const profileData = await SpotifyWebApi.getUserProfile();
+	const playlistData = await SpotifyWebApi.getUserPlaylists();
 
 	return (
 		<>
+			<pre>{JSON.stringify(session, null, 2)}</pre>
+			<pre>{JSON.stringify(playlistData, null, 2)}</pre>
+
 			{session ? (
 				<h1>Hello: {session.user?.name}</h1>
 			) : (
@@ -32,6 +34,19 @@ export default async function Home() {
 						Authenticate
 					</button>
 				</div>
+				{session && playlistData ? (
+					<ul>
+						{playlistData.items.map((item: any) => {
+							return (
+								<li key={item.id}>
+									<SpotifyPlaylistItem data={item} />
+								</li>
+							);
+						})}
+					</ul>
+				) : (
+					<h1>Something went wrong!</h1>
+				)}
 			</div>
 		</>
 	);

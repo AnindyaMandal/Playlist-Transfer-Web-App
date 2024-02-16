@@ -1,11 +1,11 @@
 import type { NextAuthOptions } from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
-import { SpotifyWebApi } from "@/app/lib/spotifyWebApi";
 
 const scopes = [
 	"user-read-email",
 	"user-read-private",
 	"playlist-modify-private",
+	"playlist-read-private",
 	"user-library-read",
 	"user-read-recently-played",
 	"user-top-read",
