@@ -3,10 +3,10 @@ import { options } from "./api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { SpotifyWebApi } from "./lib/spotifyWebApi";
 import SpotifyPlaylistItem from "@/components/SpotifyPlaylistItem";
-
+import { PlaylistItem } from "./definitions/PlaylistItem";
 export default async function Home() {
 	const session = await getServerSession(options);
-	const profileData = await SpotifyWebApi.getUserProfile();
+	// const profileData = await SpotifyWebApi.getUserProfile();
 	const playlistData = await SpotifyWebApi.getUserPlaylists();
 
 	return (
@@ -30,16 +30,22 @@ export default async function Home() {
 				</div>
 				<div>
 					<h1>YouTube</h1>
-					<button type="button" className="youtube_auth_btn">
-						Authenticate
-					</button>
+					<Link href="/api/auth/signin/google">
+						<button type="button" className="youtube_auth_btn">
+							Authenticate
+						</button>
+					</Link>
 				</div>
 				{session && playlistData ? (
 					<ul>
-						{playlistData.items.map((item: any) => {
+						{playlistData.items.map((item: PlaylistItem) => {
 							return (
 								<li key={item.id}>
-									<SpotifyPlaylistItem data={item} />
+									<SpotifyPlaylistItem
+										// name={item.name}
+										// trackCount={item.track_total}
+										item={item}
+									/>
 								</li>
 							);
 						})}
