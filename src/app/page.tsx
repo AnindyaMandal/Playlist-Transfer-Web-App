@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { options } from "./api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
-import { SpotifyWebApi } from "./lib/spotifyWebApi";
+// import { SpotifyWebApi } from "./lib/spotifyWebApi";
+import { getUserPlaylists } from "./lib/spotifyWebApi";
+
 import SpotifyPlaylistItem from "@/components/SpotifyPlaylistItem";
 import { PlaylistItem } from "./definitions/PlaylistItem";
 import getSampleData from "./lib/sampleFile";

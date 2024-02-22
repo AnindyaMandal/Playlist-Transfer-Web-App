@@ -1,6 +1,6 @@
 import { PlaylistItem } from "./PlaylistItem";
 export interface PlaylistData {
-	next: string;
+	next: string | null;
 	total: number;
 	items: Array<PlaylistItem>;
 }

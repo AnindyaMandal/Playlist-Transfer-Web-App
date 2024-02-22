@@ -5,13 +5,12 @@ import { PlaylistItem } from "@/app/definitions/PlaylistItem";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import getSampleData from "@/app/lib/sampleFile";
-import { SpotifyWebApi } from "@/app/lib/spotifyWebApi";
+import { getUserPlaylists } from "@/app/lib/spotifyWebApi";
+// import { SpotifyWebApi } from "@/app/lib/spotifyWebApi";
 
 async function SpotifyDataFetcher(props: { getData: boolean }) {
 	const session = await getServerSession(options);
-	const playlistData = props.getData
-		? await SpotifyWebApi.getUserPlaylists()
-		: undefined;
+	const playlistData = props.getData ? await getUserPlaylists() : undefined;
 	return (
 		<div>
 			{session ? (

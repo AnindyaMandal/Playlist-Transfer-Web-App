@@ -1,14 +1,37 @@
 "use client";
 import Link from "next/link";
-import React, { use, useState } from "react";
-import SpotifyDataFetcher from "@/components/SpotifyDataFetcher";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import { options } from "../api/auth/[...nextauth]/options";
+// import { SpotifyWebApi } from "../lib/spotifyWebApi";
+import { getUserPlaylists } from "../lib/spotifyWebApi";
+import { getServerSession } from "next-auth";
+import { PlaylistData } from "../definitions/PlaylistData";
+
+import SpotifyPlaylistContainer from "@/components/SpotifyPlaylistContainer";
+import getSampleData from "../lib/sampleFile";
+
+const getPlaylistData = async () => {
+	console.log("Getting playlist data...");
+	const response = await getUserPlaylists();
+	// const response = getSampleData();
+	return response;
+};
 
 function SpotifyPage() {
-	const [getData, setGetData] = useState(false);
-	const handleClick = () => {
-		if (!getData) setGetData(true);
+	// const session = await getServerSession(options);
+	// const playlistData = await SpotifyWebApi.getUserPlaylists();
+
+	const [playlistData, setPlaylistData] = useState<any>();
+
+	const [showData, setShowData] = useState<boolean>(false);
+
+	const handleClick = async () => {
+		console.log("Handling click!");
+		const endpointData = await getUserPlaylists();
+		setPlaylistData(endpointData);
+		setShowData(true);
 	};
+
 	return (
 		<div>
 			<div>
@@ -18,13 +41,35 @@ function SpotifyPage() {
 						Authenticate
 					</button>
 				</Link>
-				<Button onClick={handleClick} type="button">
+				<button
+					type="button"
+					className="spotify_auth_btn"
+					onClick={() => handleClick()}
+				>
 					Get User Playlists
-				</Button>
+				</button>
 			</div>
-			<div>
-				{/* <SpotifyDataFetcher getData={getData}></SpotifyDataFetcher> */}
-			</div>
+			{/* {session ? (
+				// <ul>
+				// 	{playlistData.items.map((item: PlaylistItem) => {
+				// 		return (
+				// 			<li key={item.id}>
+				// 				<SpotifyPlaylistItem item={item} />
+				// 			</li>
+				// 		);
+				// 	})}
+				// </ul>
+				<h1>Hello: {session.user?.name}</h1>
+			) : (
+				<h1>No session!</h1>
+			)} */}
+			{showData && playlistData ? (
+				<SpotifyPlaylistContainer
+					playlistData={playlistData}
+				></SpotifyPlaylistContainer>
+			) : (
+				<h1>{showData}</h1>
+			)}
 		</div>
 	);
 }
