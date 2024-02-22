@@ -8,6 +8,12 @@ import getSampleData from "@/app/lib/sampleFile";
 import { getUserPlaylists } from "@/app/lib/spotifyWebApi";
 // import { SpotifyWebApi } from "@/app/lib/spotifyWebApi";
 
+// ---
+// ---
+// USELESS COMPONENT!
+// ---
+// ---
+
 async function SpotifyDataFetcher(props: { getData: boolean }) {
 	const session = await getServerSession(options);
 	const playlistData = props.getData ? await getUserPlaylists() : undefined;

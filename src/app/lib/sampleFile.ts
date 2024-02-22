@@ -53,6 +53,6 @@ export default function getSampleData(): PlaylistData {
 			return items;
 		}),
 	};
-	console.log(cleanData);
+	console.log("Returning Sample Data...");
 	return cleanData;
 }

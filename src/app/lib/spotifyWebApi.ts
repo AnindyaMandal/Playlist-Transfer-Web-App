@@ -1,25 +1,40 @@
 "use server";
 import { PlaylistData } from "../definitions/PlaylistData";
+import { PlaylistItem } from "../definitions/PlaylistItem";
+let apiCallCount = 0;
 
+// export async function getUserPlaylists(
+// 	next: string | null = null
+// ): Promise<PlaylistData | undefined> {
 export async function getUserPlaylists(
 	next: string | null = null
 ): Promise<PlaylistData | undefined> {
 	const accessToken = process.env.SPOTIFY_ACCESS_TOKEN;
 	const baseUri = "https://api.spotify.com";
+	let cleanData = undefined;
 
 	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!API CALL!!!!!!!!!!!!!!!!!!!!!!!");
+
 	// console.log("Next is: " + next + " type: " + typeof next);
 	try {
 		if (!accessToken) {
 			throw new Error("Access token not set");
 		}
 
+		if (apiCallCount > 10) {
+			throw new Error(
+				"Local API call count exceeded 10. Count: " + apiCallCount
+			);
+		}
+
 		let response;
 
 		if (next == null) {
 			console.log("Next is Null!");
+			apiCallCount += 1;
+
 			response = await fetch(
-				baseUri + `/v1/me/playlists?limit=50&offset=0`,
+				baseUri + `/v1/me/playlists?limit=10&offset=0`,
 				{
 					headers: {
 						Authorization: "Bearer " + accessToken,
@@ -28,11 +43,27 @@ export async function getUserPlaylists(
 			);
 		} else {
 			console.log("Next not null");
-			response = await fetch(next, {
-				headers: {
-					Authorization: "Bearer " + accessToken,
-				},
-			});
+			console.log("Next: " + next);
+			// https://api.spotify.com/v1/users/anindya098/playlists?offset=20&limit=10
+			const urlParams = next.split("playlists?offset=");
+			const nextOffset = urlParams[1].split("&limit=")[0];
+
+			console.log("Offset value: " + nextOffset);
+			apiCallCount += 1;
+			console.log(
+				"\nFetching from....  " +
+					baseUri +
+					`/v1/me/playlists?limit=10&offset=${nextOffset}`
+			);
+
+			response = await fetch(
+				baseUri + `/v1/me/playlists?limit=10&offset=${nextOffset}`,
+				{
+					headers: {
+						Authorization: "Bearer " + accessToken,
+					},
+				}
+			);
 		}
 		if (response.status != 200) {
 			console.log(response.status);
@@ -43,11 +74,11 @@ export async function getUserPlaylists(
 
 		// console.log(data);
 		console.log("Total Playlists: " + data.total);
-
-		const cleanData = {
+		console.log("API Call Count: " + apiCallCount);
+		cleanData = {
 			next: data.next,
 			total: data.total,
-			items: data.items.map((element: any) => {
+			items: data.items.map((element: any): PlaylistItem => {
 				const items = {
 					name: element.name,
 					description: element.description,
@@ -59,13 +90,44 @@ export async function getUserPlaylists(
 			}),
 		};
 
-		console.log("Clean Data:");
-		console.log(cleanData);
-		return cleanData;
+		// console.log("Clean Data:");
+		// console.log(cleanData);
+		// return cleanData;
 	} catch (error: unknown) {
 		if (error instanceof Error) {
 			console.log(
 				"Fetch Error getUserPlaylists: " + error.message + error.name
+			);
+		}
+	}
+	try {
+		if (!cleanData) throw new Error("Clean data is undefined");
+		// There are tracks that exist in next
+		// we need to keep going and do fetch req until next is null
+		// the return value from recursive calls should update the clean data every return
+		// The final return should have a proper array of items, next should be null
+		if (cleanData.next != null) {
+			console.log("Next is: " + cleanData.next);
+			console.log("Recursing...");
+			const nextData = await getUserPlaylists((next = cleanData.next));
+
+			console.log("NextData from recursion: ");
+			console.log(nextData);
+			cleanData.next = nextData?.next;
+			Array.prototype.push.apply(cleanData.items, nextData?.items!);
+			console.log("Concatinated Data from recursion: ");
+			console.log(cleanData);
+
+			// TODO: Concat nextData and cleanData
+		}
+
+		return cleanData;
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.log(
+				"Fetch Error getUserPlaylists recursion: " +
+					error.message +
+					error.name
 			);
 		}
 	}
