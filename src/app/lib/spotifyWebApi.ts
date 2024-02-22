@@ -32,7 +32,6 @@ export class SpotifyWebApi {
 		next: string | null = null
 	): Promise<PlaylistData | undefined> {
 		const accessToken = process.env.SPOTIFY_ACCESS_TOKEN;
-		let cleanData;
 
 		// console.log("Getting Playlist");
 		// console.log("Next is: " + next + " type: " + typeof next);
@@ -46,7 +45,7 @@ export class SpotifyWebApi {
 			if (next == null) {
 				console.log("Next is Null!");
 				response = await fetch(
-					this.baseUri + `/v1/me/playlists?limit=10&offset=0`,
+					this.baseUri + `/v1/me/playlists?limit=50&offset=0`,
 					{
 						headers: {
 							Authorization: "Bearer " + accessToken,
@@ -71,7 +70,7 @@ export class SpotifyWebApi {
 			// console.log(data);
 			console.log("Total Playlists: " + data.total);
 
-			cleanData = {
+			const cleanData = {
 				next: data.next,
 				total: data.total,
 				items: data.items.map((element: any) => {
@@ -88,34 +87,6 @@ export class SpotifyWebApi {
 
 			console.log("Clean Data:");
 			console.log(cleanData);
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				console.log(
-					"Fetch Error getUserPlaylists: " +
-						error.message +
-						error.name
-				);
-			}
-		}
-
-		try {
-			if (!cleanData) throw new Error("Clean data is undefined");
-			// There are tracks that exist in next
-			// we need to keep going and do fetch req until next is null
-			// the return value from recursive calls should update the clean data every return
-			// The final return should have a proper array of items, next should be null
-			if (cleanData.next != null) {
-				console.log("Next is: " + cleanData.next);
-				console.log("Recursing...");
-				const nextData = await this.getUserPlaylists(
-					(next = cleanData.next)
-				);
-
-				console.log("NextData from recursion: ");
-				console.log(nextData);
-				// TODO: Concat nextData and cleanData
-			}
-
 			return cleanData;
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -126,6 +97,54 @@ export class SpotifyWebApi {
 				);
 			}
 		}
+
+		// try {
+		// 	if (!cleanData) throw new Error("Clean data is undefined");
+		// 	// There are tracks that exist in next
+		// 	// we need to keep going and do fetch req until next is null
+		// 	// the return value from recursive calls should update the clean data every return
+		// 	// The final return should have a proper array of items, next should be null
+		// 	if (cleanData.next != null) {
+		// 		console.log("Next is: " + cleanData.next);
+		// 		console.log("Recursing...");
+		// 		const nextData = await this.getUserPlaylists(
+		// 			(next = cleanData.next)
+		// 		);
+
+		// 		console.log("NextData from recursion: ");
+		// 		console.log(nextData);
+		// 		// TODO: Concat nextData and cleanData
+		// 	}
+
+		// 	return cleanData;
+		// } catch (error: unknown) {
+		// 	if (error instanceof Error) {
+		// 		console.log(
+		// 			"Fetch Error getUserPlaylists: " +
+		// 				error.message +
+		// 				error.name
+		// 		);
+		// 	}
+		// }
+	}
+
+	static getCleanData(data: any) {
+		const cleanData = {
+			next: data.next,
+			total: data.total,
+			items: data.items.map((element: any) => {
+				const items = {
+					name: element.name,
+					description: element.description,
+					id: element.id,
+					track_href: element.tracks.href,
+					track_total: element.tracks.total,
+				};
+				return items;
+			}),
+		};
+
+		return cleanData;
 	}
 
 	static async getPlaylistTracks(playlistId: string) {}

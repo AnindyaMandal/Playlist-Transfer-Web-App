@@ -1,0 +1,558 @@
+{
+	"href": "https://api.spotify.com/v1/users/anindya098/playlists?offset=0&limit=50",
+	"items": [
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/3svWAapzL6ndnEh92fwYi4"
+			},
+			"href": "https://api.spotify.com/v1/playlists/3svWAapzL6ndnEh92fwYi4",
+			"id": "3svWAapzL6ndnEh92fwYi4",
+			"images": [
+				{
+					"height": 640,
+					"url": "https://mosaic.scdn.co/640/ab67616d0000b273236da2d41e503d112f0809efab67616d0000b273a5aa7beadbc1f93d0ec01f23ab67616d0000b273a96002532bcd6d2f42831d5bab67616d0000b273fe6b21f560324ed40679ae6f",
+					"width": 640
+				},
+				{
+					"height": 300,
+					"url": "https://mosaic.scdn.co/300/ab67616d0000b273236da2d41e503d112f0809efab67616d0000b273a5aa7beadbc1f93d0ec01f23ab67616d0000b273a96002532bcd6d2f42831d5bab67616d0000b273fe6b21f560324ed40679ae6f",
+					"width": 300
+				},
+				{
+					"height": 60,
+					"url": "https://mosaic.scdn.co/60/ab67616d0000b273236da2d41e503d112f0809efab67616d0000b273a5aa7beadbc1f93d0ec01f23ab67616d0000b273a96002532bcd6d2f42831d5bab67616d0000b273fe6b21f560324ed40679ae6f",
+					"width": 60
+				}
+			],
+			"name": "Head In The Clouds",
+			"owner": {
+				"display_name": "anindya098",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/anindya098"
+				},
+				"href": "https://api.spotify.com/v1/users/anindya098",
+				"id": "anindya098",
+				"type": "user",
+				"uri": "spotify:user:anindya098"
+			},
+			"primary_color": null,
+			"public": false,
+			"snapshot_id": "MjcsMWQ1YTI4YmZlYTFjN2QxY2NhY2ExM2ExOTA1ZjA1MWRiZjg4MDVjMg==",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/3svWAapzL6ndnEh92fwYi4/tracks",
+				"total": 25
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:3svWAapzL6ndnEh92fwYi4"
+		},
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/5kddrx3GPCK9mlHBdcaCtM"
+			},
+			"href": "https://api.spotify.com/v1/playlists/5kddrx3GPCK9mlHBdcaCtM",
+			"id": "5kddrx3GPCK9mlHBdcaCtM",
+			"images": [
+				{
+					"height": 640,
+					"url": "https://mosaic.scdn.co/640/ab67616d0000b273124d7c978fdd3ebd0edf05efab67616d0000b2732326bd2b4456e410a2ded221ab67616d0000b2733e296819bec61d3174b350a2ab67616d0000b2739cd0a4328101c8a169b661f5",
+					"width": 640
+				},
+				{
+					"height": 300,
+					"url": "https://mosaic.scdn.co/300/ab67616d0000b273124d7c978fdd3ebd0edf05efab67616d0000b2732326bd2b4456e410a2ded221ab67616d0000b2733e296819bec61d3174b350a2ab67616d0000b2739cd0a4328101c8a169b661f5",
+					"width": 300
+				},
+				{
+					"height": 60,
+					"url": "https://mosaic.scdn.co/60/ab67616d0000b273124d7c978fdd3ebd0edf05efab67616d0000b2732326bd2b4456e410a2ded221ab67616d0000b2733e296819bec61d3174b350a2ab67616d0000b2739cd0a4328101c8a169b661f5",
+					"width": 60
+				}
+			],
+			"name": "m3m3s",
+			"owner": {
+				"display_name": "anindya098",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/anindya098"
+				},
+				"href": "https://api.spotify.com/v1/users/anindya098",
+				"id": "anindya098",
+				"type": "user",
+				"uri": "spotify:user:anindya098"
+			},
+			"primary_color": null,
+			"public": false,
+			"snapshot_id": "MjksMmIzM2YwYmNkYmMyNzU2YTA3ZDk3Y2Q2NTNkNWUyNDEzYzkzM2NiYQ==",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/5kddrx3GPCK9mlHBdcaCtM/tracks",
+				"total": 22
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:5kddrx3GPCK9mlHBdcaCtM"
+		},
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/6c78QWYubdOpaY7bZEQXL6"
+			},
+			"href": "https://api.spotify.com/v1/playlists/6c78QWYubdOpaY7bZEQXL6",
+			"id": "6c78QWYubdOpaY7bZEQXL6",
+			"images": [
+				{
+					"height": 640,
+					"url": "https://mosaic.scdn.co/640/ab67616d0000b273046527a9c176f7c2916f3530ab67616d0000b27329377d04c9ffadff82beb950ab67616d0000b27343c58ada765e311ef16792ceab67616d0000b273d79cfa3155b50beb5dbeeb9a",
+					"width": 640
+				},
+				{
+					"height": 300,
+					"url": "https://mosaic.scdn.co/300/ab67616d0000b273046527a9c176f7c2916f3530ab67616d0000b27329377d04c9ffadff82beb950ab67616d0000b27343c58ada765e311ef16792ceab67616d0000b273d79cfa3155b50beb5dbeeb9a",
+					"width": 300
+				},
+				{
+					"height": 60,
+					"url": "https://mosaic.scdn.co/60/ab67616d0000b273046527a9c176f7c2916f3530ab67616d0000b27329377d04c9ffadff82beb950ab67616d0000b27343c58ada765e311ef16792ceab67616d0000b273d79cfa3155b50beb5dbeeb9a",
+					"width": 60
+				}
+			],
+			"name": "M3M3",
+			"owner": {
+				"display_name": "anindya098",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/anindya098"
+				},
+				"href": "https://api.spotify.com/v1/users/anindya098",
+				"id": "anindya098",
+				"type": "user",
+				"uri": "spotify:user:anindya098"
+			},
+			"primary_color": null,
+			"public": false,
+			"snapshot_id": "NjEsNjExYjI5NjIwOTNlYmI1OTBmOGFjNjIyZTE1ZWE2NWY0MTM1MzZkMg==",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/6c78QWYubdOpaY7bZEQXL6/tracks",
+				"total": 55
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:6c78QWYubdOpaY7bZEQXL6"
+		},
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/09zROpmTraqywZMfNRfQ3q"
+			},
+			"href": "https://api.spotify.com/v1/playlists/09zROpmTraqywZMfNRfQ3q",
+			"id": "09zROpmTraqywZMfNRfQ3q",
+			"images": [
+				{
+					"height": null,
+					"url": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb575c369ce613fe0560dda70e",
+					"width": null
+				}
+			],
+			"name": "you lose if you sing",
+			"owner": {
+				"display_name": "Cj Jagat",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/12125968533"
+				},
+				"href": "https://api.spotify.com/v1/users/12125968533",
+				"id": "12125968533",
+				"type": "user",
+				"uri": "spotify:user:12125968533"
+			},
+			"primary_color": null,
+			"public": false,
+			"snapshot_id": "NDEwNCwzMmQ3MDM4NzU1MDk5ODVmYmQxOGU3Y2I1NTY0ZDNkMTAzNTE2ZjA5",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/09zROpmTraqywZMfNRfQ3q/tracks",
+				"total": 4081
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:09zROpmTraqywZMfNRfQ3q"
+		},
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/6rTwPQAcuLzuP5FvFvm267"
+			},
+			"href": "https://api.spotify.com/v1/playlists/6rTwPQAcuLzuP5FvFvm267",
+			"id": "6rTwPQAcuLzuP5FvFvm267",
+			"images": [
+				{
+					"height": 640,
+					"url": "https://mosaic.scdn.co/640/ab67616d0000b27317f944d8cad77bc712348998ab67616d0000b2734a1f979ebccc290116b42e9fab67616d0000b273582ce32b943f9a14894350c0ab67616d0000b27374d9a833744be96426ee833c",
+					"width": 640
+				},
+				{
+					"height": 300,
+					"url": "https://mosaic.scdn.co/300/ab67616d0000b27317f944d8cad77bc712348998ab67616d0000b2734a1f979ebccc290116b42e9fab67616d0000b273582ce32b943f9a14894350c0ab67616d0000b27374d9a833744be96426ee833c",
+					"width": 300
+				},
+				{
+					"height": 60,
+					"url": "https://mosaic.scdn.co/60/ab67616d0000b27317f944d8cad77bc712348998ab67616d0000b2734a1f979ebccc290116b42e9fab67616d0000b273582ce32b943f9a14894350c0ab67616d0000b27374d9a833744be96426ee833c",
+					"width": 60
+				}
+			],
+			"name": "Mateo's Songs",
+			"owner": {
+				"display_name": "anindya098",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/anindya098"
+				},
+				"href": "https://api.spotify.com/v1/users/anindya098",
+				"id": "anindya098",
+				"type": "user",
+				"uri": "spotify:user:anindya098"
+			},
+			"primary_color": null,
+			"public": true,
+			"snapshot_id": "NTQsZDEyN2FjM2YyNWRkNWVhNTg5M2YwYzA1N2Y4NjgzODU3MDA1YzZmNQ==",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/6rTwPQAcuLzuP5FvFvm267/tracks",
+				"total": 50
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:6rTwPQAcuLzuP5FvFvm267"
+		},
+		{
+			"collaborative": false,
+			"description": "All Arc North Releases, both originals and remixes.",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/3nku4msKSmZIfRYO7Mypid"
+			},
+			"href": "https://api.spotify.com/v1/playlists/3nku4msKSmZIfRYO7Mypid",
+			"id": "3nku4msKSmZIfRYO7Mypid",
+			"images": [
+				{
+					"height": null,
+					"url": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb08ed22815a202e70e734d473",
+					"width": null
+				}
+			],
+			"name": "100% Arc North",
+			"owner": {
+				"display_name": "Arc North",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/arcnorth"
+				},
+				"href": "https://api.spotify.com/v1/users/arcnorth",
+				"id": "arcnorth",
+				"type": "user",
+				"uri": "spotify:user:arcnorth"
+			},
+			"primary_color": null,
+			"public": true,
+			"snapshot_id": "MTkyLDYwOGU5YWZkYzdkYWNhZmE0ODM2M2JkYzMxNmMyMGZlYmQwZDgxYmU=",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/3nku4msKSmZIfRYO7Mypid/tracks",
+				"total": 71
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:3nku4msKSmZIfRYO7Mypid"
+		},
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/0L5ctpfVcwakGay3fljxjb"
+			},
+			"href": "https://api.spotify.com/v1/playlists/0L5ctpfVcwakGay3fljxjb",
+			"id": "0L5ctpfVcwakGay3fljxjb",
+			"images": [
+				{
+					"height": 640,
+					"url": "https://mosaic.scdn.co/640/ab67616d0000b2734fe4306d887f5a4278fa9635ab67616d0000b273770c06b25f1b61806f6eef90ab67616d0000b27382a0d78820cf33456fab1d68ab67616d0000b273a1ce89ebffa34581c265240c",
+					"width": 640
+				},
+				{
+					"height": 300,
+					"url": "https://mosaic.scdn.co/300/ab67616d0000b2734fe4306d887f5a4278fa9635ab67616d0000b273770c06b25f1b61806f6eef90ab67616d0000b27382a0d78820cf33456fab1d68ab67616d0000b273a1ce89ebffa34581c265240c",
+					"width": 300
+				},
+				{
+					"height": 60,
+					"url": "https://mosaic.scdn.co/60/ab67616d0000b2734fe4306d887f5a4278fa9635ab67616d0000b273770c06b25f1b61806f6eef90ab67616d0000b27382a0d78820cf33456fab1d68ab67616d0000b273a1ce89ebffa34581c265240c",
+					"width": 60
+				}
+			],
+			"name": "Germany Hip Hop Bangers",
+			"owner": {
+				"display_name": "armang-ca",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/armang-ca"
+				},
+				"href": "https://api.spotify.com/v1/users/armang-ca",
+				"id": "armang-ca",
+				"type": "user",
+				"uri": "spotify:user:armang-ca"
+			},
+			"primary_color": null,
+			"public": true,
+			"snapshot_id": "NDksYzQzODliZTRmYTBkMmZiOTNhODk1NjJjMTAyYmVlZWQ0M2RhN2ZjOA==",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/0L5ctpfVcwakGay3fljxjb/tracks",
+				"total": 45
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:0L5ctpfVcwakGay3fljxjb"
+		},
+		{
+			"collaborative": false,
+			"description": "Only the best music to play games, workout, dance, or party to! This playlist contains EDM - HOUSE - FUTURE BASS - TRAP - RAP",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/3I5PiqsI5OQh83gbG6PRJH"
+			},
+			"href": "https://api.spotify.com/v1/playlists/3I5PiqsI5OQh83gbG6PRJH",
+			"id": "3I5PiqsI5OQh83gbG6PRJH",
+			"images": [
+				{
+					"height": null,
+					"url": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbbf1a714d007bdf99fc7d6962",
+					"width": null
+				}
+			],
+			"name": "Gaming Music 2024 🔥🎮 |  Best of EDM - Trap - Future Bass | Nightblue Music ",
+			"owner": {
+				"display_name": "Nightblue Music",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/nightblue3"
+				},
+				"href": "https://api.spotify.com/v1/users/nightblue3",
+				"id": "nightblue3",
+				"type": "user",
+				"uri": "spotify:user:nightblue3"
+			},
+			"primary_color": null,
+			"public": true,
+			"snapshot_id": "NzExNixmNmU2MTBhYTZjYjQ4MzZkYmJlYTRmNjRmNGVjOGNkNWQzYjY5N2Q0",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/3I5PiqsI5OQh83gbG6PRJH/tracks",
+				"total": 217
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:3I5PiqsI5OQh83gbG6PRJH"
+		},
+		{
+			"collaborative": false,
+			"description": "The best NCS songs that are copyright free and safe music for gaming, live streaming, studying. Official playlist from NoCopyrightSounds. Cover: Don Diablo",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/7sZbq8QGyMnhKPcLJvCUFD"
+			},
+			"href": "https://api.spotify.com/v1/playlists/7sZbq8QGyMnhKPcLJvCUFD",
+			"id": "7sZbq8QGyMnhKPcLJvCUFD",
+			"images": [
+				{
+					"height": null,
+					"url": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbc9d8288f341835a1c40f961d",
+					"width": null
+				}
+			],
+			"name": "NCS Releases",
+			"owner": {
+				"display_name": "NCS",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/nocopyrightsounds"
+				},
+				"href": "https://api.spotify.com/v1/users/nocopyrightsounds",
+				"id": "nocopyrightsounds",
+				"type": "user",
+				"uri": "spotify:user:nocopyrightsounds"
+			},
+			"primary_color": null,
+			"public": true,
+			"snapshot_id": "NTU2OSxmNGI3NzZjZTBiODY0NDg0NjZmZGIwMTRhYzNkMTkzNTNmMWIzNzcy",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/7sZbq8QGyMnhKPcLJvCUFD/tracks",
+				"total": 100
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:7sZbq8QGyMnhKPcLJvCUFD"
+		},
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/5rEgW6mcDtnCiViQu4BYny"
+			},
+			"href": "https://api.spotify.com/v1/playlists/5rEgW6mcDtnCiViQu4BYny",
+			"id": "5rEgW6mcDtnCiViQu4BYny",
+			"images": [
+				{
+					"height": 640,
+					"url": "https://mosaic.scdn.co/640/ab67616d0000b273012d60d5c6f5e419f5ace62aab67616d0000b273204f3aa1f9c4bd2d36e29dc9ab67616d0000b2738c3ff28fc48f488a9c384633ab67616d0000b273a24df74e222d4520bc2d1cbb",
+					"width": 640
+				},
+				{
+					"height": 300,
+					"url": "https://mosaic.scdn.co/300/ab67616d0000b273012d60d5c6f5e419f5ace62aab67616d0000b273204f3aa1f9c4bd2d36e29dc9ab67616d0000b2738c3ff28fc48f488a9c384633ab67616d0000b273a24df74e222d4520bc2d1cbb",
+					"width": 300
+				},
+				{
+					"height": 60,
+					"url": "https://mosaic.scdn.co/60/ab67616d0000b273012d60d5c6f5e419f5ace62aab67616d0000b273204f3aa1f9c4bd2d36e29dc9ab67616d0000b2738c3ff28fc48f488a9c384633ab67616d0000b273a24df74e222d4520bc2d1cbb",
+					"width": 60
+				}
+			],
+			"name": "Arman's Lord Lit Mix",
+			"owner": {
+				"display_name": "armang-ca",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/armang-ca"
+				},
+				"href": "https://api.spotify.com/v1/users/armang-ca",
+				"id": "armang-ca",
+				"type": "user",
+				"uri": "spotify:user:armang-ca"
+			},
+			"primary_color": null,
+			"public": false,
+			"snapshot_id": "NDMsY2JlYzc0MGI4Yjg3MGI4NDg0MDZkNzBmNjhiZjI0Zjc4ZjExMWJjNA==",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/5rEgW6mcDtnCiViQu4BYny/tracks",
+				"total": 37
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:5rEgW6mcDtnCiViQu4BYny"
+		},
+		{
+			"collaborative": false,
+			"description": "Turn up your next festival or show pre-party (or afterparty) with this Dubstep banger filled playlist to get you going for any night out with the hardest hitting Bass music songs in EDM.",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/5DCNkb3XkXyhTtc93qwRHL"
+			},
+			"href": "https://api.spotify.com/v1/playlists/5DCNkb3XkXyhTtc93qwRHL",
+			"id": "5DCNkb3XkXyhTtc93qwRHL",
+			"images": [
+				{
+					"height": null,
+					"url": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb7742af9004b16984f2601077",
+					"width": null
+				}
+			],
+			"name": "Hype Party Pregame - Bass and Electro",
+			"owner": {
+				"display_name": "Monstercat",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/monstercatmedia"
+				},
+				"href": "https://api.spotify.com/v1/users/monstercatmedia",
+				"id": "monstercatmedia",
+				"type": "user",
+				"uri": "spotify:user:monstercatmedia"
+			},
+			"primary_color": null,
+			"public": true,
+			"snapshot_id": "MjMxNixkZDZlM2ZiM2E1MDYyNmMxNzE1ODBkMGMyMTExYmIzNGE3YjU0ODY3",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/5DCNkb3XkXyhTtc93qwRHL/tracks",
+				"total": 38
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:5DCNkb3XkXyhTtc93qwRHL"
+		},
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/2U4jY5S1b36LccEtpX16A8"
+			},
+			"href": "https://api.spotify.com/v1/playlists/2U4jY5S1b36LccEtpX16A8",
+			"id": "2U4jY5S1b36LccEtpX16A8",
+			"images": [
+				{
+					"height": 640,
+					"url": "https://mosaic.scdn.co/640/ab67616d0000b27360b339edc5ab37a20dd64410ab67616d0000b27386ca3866614979895a79e40bab67616d0000b273873af4aaf0d8189e09ebcd4cab67616d0000b273f9909783cb4dd82e02810519",
+					"width": 640
+				},
+				{
+					"height": 300,
+					"url": "https://mosaic.scdn.co/300/ab67616d0000b27360b339edc5ab37a20dd64410ab67616d0000b27386ca3866614979895a79e40bab67616d0000b273873af4aaf0d8189e09ebcd4cab67616d0000b273f9909783cb4dd82e02810519",
+					"width": 300
+				},
+				{
+					"height": 60,
+					"url": "https://mosaic.scdn.co/60/ab67616d0000b27360b339edc5ab37a20dd64410ab67616d0000b27386ca3866614979895a79e40bab67616d0000b273873af4aaf0d8189e09ebcd4cab67616d0000b273f9909783cb4dd82e02810519",
+					"width": 60
+				}
+			],
+			"name": "Liked from Radio",
+			"owner": {
+				"display_name": "anindya098",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/anindya098"
+				},
+				"href": "https://api.spotify.com/v1/users/anindya098",
+				"id": "anindya098",
+				"type": "user",
+				"uri": "spotify:user:anindya098"
+			},
+			"primary_color": null,
+			"public": false,
+			"snapshot_id": "Nyw5M2VjZDBjMDExZWUyMjQzMzc4MjhiMmZkNWM3ZjQ1NmY4ZGNlYzQ3",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/2U4jY5S1b36LccEtpX16A8/tracks",
+				"total": 5
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:2U4jY5S1b36LccEtpX16A8"
+		},
+		{
+			"collaborative": false,
+			"description": "",
+			"external_urls": {
+				"spotify": "https://open.spotify.com/playlist/6NI9XTNBUq2F5Cx3mu5z8L"
+			},
+			"href": "https://api.spotify.com/v1/playlists/6NI9XTNBUq2F5Cx3mu5z8L",
+			"id": "6NI9XTNBUq2F5Cx3mu5z8L",
+			"images": [
+				{
+					"height": 640,
+					"url": "https://mosaic.scdn.co/640/ab67616d0000b27301fef6209493c91d83fd520cab67616d0000b27307a0f4975dc3575d94a2f52eab67616d0000b27362795e3a4eeda1f73595b67bab67616d0000b273b4dc1e192bcda2b8ef55e2d8",
+					"width": 640
+				},
+				{
+					"height": 300,
+					"url": "https://mosaic.scdn.co/300/ab67616d0000b27301fef6209493c91d83fd520cab67616d0000b27307a0f4975dc3575d94a2f52eab67616d0000b27362795e3a4eeda1f73595b67bab67616d0000b273b4dc1e192bcda2b8ef55e2d8",
+					"width": 300
+				},
+				{
+					"height": 60,
+					"url": "https://mosaic.scdn.co/60/ab67616d0000b27301fef6209493c91d83fd520cab67616d0000b27307a0f4975dc3575d94a2f52eab67616d0000b27362795e3a4eeda1f73595b67bab67616d0000b273b4dc1e192bcda2b8ef55e2d8",
+					"width": 60
+				}
+			],
+			"name": "Liquid Sound Design",
+			"owner": {
+				"display_name": "mrsbabalafe",
+				"external_urls": {
+					"spotify": "https://open.spotify.com/user/mrsbabalafe"
+				},
+				"href": "https://api.spotify.com/v1/users/mrsbabalafe",
+				"id": "mrsbabalafe",
+				"type": "user",
+				"uri": "spotify:user:mrsbabalafe"
+			},
+			"primary_color": null,
+			"public": false,
+			"snapshot_id": "NjgsYTgyZWU0NTgxZDgwOGM4ZWVkN2QwOGExNzA1YWU4ZTBkODI5YjEyMw==",
+			"tracks": {
+				"href": "https://api.spotify.com/v1/playlists/6NI9XTNBUq2F5Cx3mu5z8L/tracks",
+				"total": 51
+			},
+			"type": "playlist",
+			"uri": "spotify:playlist:6NI9XTNBUq2F5Cx3mu5z8L"
+		}
+	],
+	"limit": 50,
+	"next": null,
+	"offset": 0,
+	"previous": null,
+	"total": 32
+}

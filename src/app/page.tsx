@@ -4,10 +4,16 @@ import { getServerSession } from "next-auth";
 import { SpotifyWebApi } from "./lib/spotifyWebApi";
 import SpotifyPlaylistItem from "@/components/SpotifyPlaylistItem";
 import { PlaylistItem } from "./definitions/PlaylistItem";
+import getSampleData from "./lib/sampleFile";
+
 export default async function Home() {
 	const session = await getServerSession(options);
 	// const profileData = await SpotifyWebApi.getUserProfile();
-	const playlistData = await SpotifyWebApi.getUserPlaylists();
+	// const playlistData = await SpotifyWebApi.getUserPlaylists();
+
+	// DISABLED API CALL FOR NOW
+
+	const playlistData = await getSampleData();
 
 	return (
 		<>
