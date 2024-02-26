@@ -53,6 +53,9 @@ export default async function Home() {
 										// name={item.name}
 										// trackCount={item.track_total}
 										item={item}
+										// REMOVE THIS HANDLE ON CLICK SHIT
+
+										playlistID={item.id}
 									/>
 								</li>
 							);

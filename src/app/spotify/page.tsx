@@ -1,13 +1,14 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { options } from "../api/auth/[...nextauth]/options";
 // import { SpotifyWebApi } from "../lib/spotifyWebApi";
-import { getUserPlaylists } from "../lib/spotifyWebApi";
+import { getPlaylistTracks, getUserPlaylists } from "../lib/spotifyWebApi";
 import { getServerSession } from "next-auth";
 
 import SpotifyPlaylistContainer from "@/components/SpotifyPlaylistContainer";
 import getSampleData from "../lib/sampleFile";
+import SpotifySongsContainer from "@/components/SpotifySongsContainer";
 
 const getPlaylistData = async () => {
 	console.log("Getting playlist data...");
@@ -20,18 +21,25 @@ function SpotifyPage() {
 	// const session = await getServerSession(options);
 	// const playlistData = await SpotifyWebApi.getUserPlaylists();
 
-	const [playlistData, setPlaylistData] = useState<any>(
-		getFromSessionStorage()
-	);
+	const [playlistData, setPlaylistData] = useState<any>(null);
+	const [selectedPlaylistSongs, setSelectedPlaylistSongs] =
+		useState<any>(null);
 
-	// const [showData, setShowData] = useState<boolean>(false);
+	const [selectedPlaylistTag, setSelectedPlaylistTag] = useState<string>(
+		"No playlist Selected"
+	);
 
 	const handleClick = async () => {
 		console.log("Handling click!");
 		const endpointData = await getUserPlaylists();
-		setPlaylistData(endpointData);
-		// setShowData(true);
-		storeToSessionStorage(JSON.stringify(endpointData));
+
+		if (endpointData !== undefined) {
+			console.log("JSON PLaylist Data:");
+			console.log(endpointData);
+			setPlaylistData(endpointData);
+
+			storeToSessionStorage(JSON.stringify(endpointData));
+		}
 	};
 
 	function storeToSessionStorage(
@@ -42,18 +50,41 @@ function SpotifyPage() {
 	}
 
 	function getFromSessionStorage(key: string = "playlistSessionData") {
-		const data = window.sessionStorage.getItem(key);
-		if (!data) {
-			const jsonData = {
-				next: null,
-				total: 0,
-				items: [],
-			};
+		if (window) {
+			const data = window?.sessionStorage.getItem(key);
+			if (data == undefined || null) {
+				console.log("Data: " + data);
+
+				return null;
+			}
+			const jsonData = JSON.parse(data);
+			console.log(typeof jsonData);
+			console.log("jsonData: " + jsonData);
 			return jsonData;
 		}
-		const jsonData = JSON.parse(data);
-		return jsonData;
 	}
+
+	async function handlePlaylistClick(
+		playlistID: string,
+		playlistName: string
+	) {
+		console.log("Getting Songs for: " + playlistID);
+		const endpointData = await getPlaylistTracks(playlistID);
+		console.log("Endpoint Data: " + typeof endpointData);
+		console.log(endpointData);
+
+		if (endpointData !== undefined) {
+			setSelectedPlaylistSongs(endpointData);
+			setSelectedPlaylistTag(playlistName);
+		} else {
+			setSelectedPlaylistTag("No Playlist Selected!");
+		}
+	}
+
+	useEffect(() => {
+		console.log("USE EFFECT!");
+		setPlaylistData(getFromSessionStorage());
+	}, []);
 
 	return (
 		<div>
@@ -86,15 +117,33 @@ function SpotifyPage() {
 			) : (
 				<h1>No session!</h1>
 			)} */}
-			{/* {showData && playlistData ? ( */}
-			{playlistData ? (
-				<SpotifyPlaylistContainer
-					playlistData={playlistData}
-				></SpotifyPlaylistContainer>
-			) : (
-				// <h1>{showData}</h1>
-				<h1>No playlist data available!</h1>
-			)}
+			<div className="w-full items-center">
+				<h2 className="w-full text-center">
+					Selected Playlist: {selectedPlaylistTag}
+				</h2>
+			</div>
+			<div className="flex flex-row">
+				<div className="w-1/2">
+					{playlistData ? (
+						<SpotifyPlaylistContainer
+							playlistData={playlistData}
+							handleOnClick={handlePlaylistClick}
+						></SpotifyPlaylistContainer>
+					) : (
+						<h1>No playlist data available!</h1>
+					)}
+				</div>
+
+				<div className="ml-2">
+					{selectedPlaylistSongs ? (
+						<SpotifySongsContainer
+							trackData={selectedPlaylistSongs}
+						></SpotifySongsContainer>
+					) : (
+						<h2>Song Data Error</h2>
+					)}
+				</div>
+			</div>
 		</div>
 	);
 }

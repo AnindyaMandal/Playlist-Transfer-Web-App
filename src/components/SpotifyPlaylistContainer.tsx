@@ -5,7 +5,9 @@ import SpotifyPlaylistItem from "./SpotifyPlaylistItem";
 
 const SpotifyPlaylistContainer = (props: {
 	playlistData: PlaylistData | undefined;
+	handleOnClick: Function;
 }) => {
+	console.log(props);
 	return (
 		<div>
 			<ul>
@@ -14,15 +16,17 @@ const SpotifyPlaylistContainer = (props: {
 						return (
 							<li key={item.id}>
 								<SpotifyPlaylistItem
-									// name={item.name}
-									// trackCount={item.track_total}
 									item={item}
+									playlistID={item.id}
+									handleOnClick={props.handleOnClick}
 								/>
 							</li>
 						);
 					})
 				) : (
-					<h1>No Playlist data!</h1>
+					<div className="spotify_playlist_li">
+						<h1>No Playlist data!</h1>
+					</div>
 				)}
 			</ul>
 		</div>

@@ -22,9 +22,9 @@ async function SpotifyDataFetcher(props: { getData: boolean }) {
 			{session ? (
 				<div>
 					<h1>Hello: {session.user?.name}</h1>
-					<SpotifyPlaylistContainer
+					{/* <SpotifyPlaylistContainer
 						playlistData={playlistData}
-					></SpotifyPlaylistContainer>
+					></SpotifyPlaylistContainer> */}
 				</div>
 			) : (
 				<h1>No session!</h1>
