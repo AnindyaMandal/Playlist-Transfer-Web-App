@@ -178,7 +178,7 @@ export async function getPlaylistTracks(
 			console.log("Next URL: " + next);
 			// https://api.spotify.com/v1/users/anindya098/playlists?offset=20&limit=10
 			let nextUrlParams = new URL(next);
-			let nextOffset = nextUrlParams.searchParams.get("limit");
+			let nextOffset = nextUrlParams.searchParams.get("offset");
 			// const urlParams = next.split("playlists?offset=");
 			// const nextOffset = urlParams[1].split("&limit=")[0];
 
@@ -246,7 +246,9 @@ export async function getPlaylistTracks(
 						}
 					),
 					popularity: element.track.popularity,
-					trackURI: element.track.uri,
+					// trackURI: element.track.uri,
+					trackURI:
+						"http://open.spotify.com/track/" + element.track.id,
 				};
 				return items;
 			}),
@@ -269,6 +271,8 @@ export async function getPlaylistTracks(
 		// the return value from recursive calls should update the clean data every return
 		// The final return should have a proper array of items, next should be null
 		if (cleanData.next != null) {
+			if (apiCallCount > 10) return cleanData;
+
 			console.log("Next is: " + cleanData.next);
 			console.log("Recursing...");
 			const nextData = await getPlaylistTracks(

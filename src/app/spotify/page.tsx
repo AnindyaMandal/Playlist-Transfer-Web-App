@@ -117,13 +117,14 @@ function SpotifyPage() {
 			) : (
 				<h1>No session!</h1>
 			)} */}
-			<div className="w-full items-center">
-				<h2 className="w-full text-center">
-					Selected Playlist: {selectedPlaylistTag}
-				</h2>
-			</div>
-			<div className="flex flex-row">
-				<div className="w-1/2">
+
+			<div className="flex flex-row ">
+				<div className="w-5/12">
+					<div className="w-full items-center">
+						<h2 className="w-full text-center">
+							User&apos;s Playlists:
+						</h2>
+					</div>
 					{playlistData ? (
 						<SpotifyPlaylistContainer
 							playlistData={playlistData}
@@ -134,7 +135,10 @@ function SpotifyPage() {
 					)}
 				</div>
 
-				<div className="ml-2">
+				<div className="ml-2 w-5/12">
+					<h2 className="w-full text-center">
+						Selected Playlist: {selectedPlaylistTag}
+					</h2>
 					{selectedPlaylistSongs ? (
 						<SpotifySongsContainer
 							trackData={selectedPlaylistSongs}
