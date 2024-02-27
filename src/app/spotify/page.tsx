@@ -17,6 +17,11 @@ const getPlaylistData = async () => {
 	return response;
 };
 
+const sessionStorageKeys = {
+	userPlaylistData: "userPlaylistSessionData",
+	playlistTrackData: "playlistTrackData",
+};
+
 function SpotifyPage() {
 	// const session = await getServerSession(options);
 	// const playlistData = await SpotifyWebApi.getUserPlaylists();
@@ -29,6 +34,10 @@ function SpotifyPage() {
 		"No playlist Selected"
 	);
 
+	// Handle click for Get user playlists
+	// Gets playlist data or undefined from Spotify API
+	// Sets state variable for re-render
+	// Stores data to Session Storage
 	const handleClick = async () => {
 		console.log("Handling click!");
 		const endpointData = await getUserPlaylists();
@@ -38,18 +47,20 @@ function SpotifyPage() {
 			console.log(endpointData);
 			setPlaylistData(endpointData);
 
-			storeToSessionStorage(JSON.stringify(endpointData));
+			storeToSessionStorage(
+				JSON.stringify(endpointData),
+				sessionStorageKeys.playlistTrackData
+			);
 		}
 	};
 
-	function storeToSessionStorage(
-		data: string,
-		key: string = "playlistSessionData"
-	) {
+	// "userPlaylistSessionData" KEY for playlist Data
+	// ""
+	function storeToSessionStorage(data: string, key: string) {
 		window.sessionStorage.setItem(key, data);
 	}
 
-	function getFromSessionStorage(key: string = "playlistSessionData") {
+	function getFromSessionStorage(key: string) {
 		if (window) {
 			const data = window?.sessionStorage.getItem(key);
 			if (data == undefined || null) {
@@ -64,6 +75,18 @@ function SpotifyPage() {
 		}
 	}
 
+	// Handle clicking on a playlist item
+	// Gets TrackData for playlist clicked
+	// Sets state variable for rendering list of tracks
+	// Sets state variable showing currently selected playlist
+	// Stores data into session storage
+	//
+	//
+	// TODO:
+	// Store data into session storage
+	// Check if data exists for playlist in session storage
+	// If so get that data and show to use
+	// Should find out way to store when data was acquired to give the user option to refresh
 	async function handlePlaylistClick(
 		playlistID: string,
 		playlistName: string
@@ -76,6 +99,13 @@ function SpotifyPage() {
 		if (endpointData !== undefined) {
 			setSelectedPlaylistSongs(endpointData);
 			setSelectedPlaylistTag(playlistName);
+
+			// Store all track data for selected playlist
+			// Key is constant defined at the top + playlistID for unique key per playlist
+			storeToSessionStorage(
+				JSON.stringify(endpointData),
+				sessionStorageKeys.playlistTrackData + playlistID
+			);
 		} else {
 			setSelectedPlaylistTag("No Playlist Selected!");
 		}
@@ -83,25 +113,34 @@ function SpotifyPage() {
 
 	useEffect(() => {
 		console.log("USE EFFECT!");
-		setPlaylistData(getFromSessionStorage());
+		// Get playlist session data from storage
+		setPlaylistData(getFromSessionStorage("playlistSessionData"));
 	}, []);
 
 	return (
 		<div>
-			<div>
-				<h1>SPOTIFY</h1>
-				<Link href="/api/auth/signin/spotify">
-					<button type="button" className="spotify_auth_btn">
-						Authenticate
+			<div className="flex flex-col w-full ml-2">
+				<h1 className="text-center w-5/12">SPOTIFY</h1>
+				<div className="w-5/12 ">
+					<Link href="/api/auth/signin/spotify">
+						<button
+							type="button"
+							className="spotify_auth_btn w-full"
+						>
+							Authenticate
+						</button>
+					</Link>
+				</div>
+
+				<div className="w-5/12">
+					<button
+						type="button"
+						className="spotify_auth_btn w-full"
+						onClick={() => handleClick()}
+					>
+						Get User Playlists
 					</button>
-				</Link>
-				<button
-					type="button"
-					className="spotify_auth_btn"
-					onClick={() => handleClick()}
-				>
-					Get User Playlists
-				</button>
+				</div>
 			</div>
 			{/* {session ? (
 				// <ul>
@@ -118,7 +157,7 @@ function SpotifyPage() {
 				<h1>No session!</h1>
 			)} */}
 
-			<div className="flex flex-row ">
+			<div className="flex flex-row ml-2">
 				<div className="w-5/12">
 					<div className="w-full items-center">
 						<h2 className="w-full text-center">
@@ -144,7 +183,13 @@ function SpotifyPage() {
 							trackData={selectedPlaylistSongs}
 						></SpotifySongsContainer>
 					) : (
-						<h2>Song Data Error</h2>
+						<h2>
+							{selectedPlaylistTag != "No playlist Selected" ? (
+								<h1>SONG DATA ERROR</h1>
+							) : (
+								<></>
+							)}
+						</h2>
 					)}
 				</div>
 			</div>

@@ -10,7 +10,7 @@ function SpotifyPlaylistItem(props: {
 	playlistID: string;
 }) {
 	return (
-		<div>
+		<div className="w-full mb-2">
 			<button
 				className="w-full spotify_playlist_li"
 				onClick={() => {

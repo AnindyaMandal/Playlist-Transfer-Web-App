@@ -29,7 +29,7 @@ const SpotifySongsContainer = (props: { trackData: TrackData }) => {
 						);
 					})
 				) : (
-					<h1>No Song data!</h1>
+					<></>
 				)}
 			</ul>
 		</div>

@@ -20,7 +20,7 @@ export default async function Home() {
 	return (
 		<>
 			<pre>{JSON.stringify(session, null, 2)}</pre>
-			<pre>{JSON.stringify(playlistData, null, 2)}</pre>
+			{/* <pre>{JSON.stringify(playlistData, null, 2)}</pre> */}
 
 			{session ? (
 				<h1>Hello: {session.user?.name}</h1>
@@ -44,7 +44,7 @@ export default async function Home() {
 						</button>
 					</Link>
 				</div>
-				{session && playlistData ? (
+				{/* {session && playlistData ? (
 					<ul>
 						{playlistData.items.map((item: PlaylistItem) => {
 							return (
@@ -63,7 +63,7 @@ export default async function Home() {
 					</ul>
 				) : (
 					<h1>Something went wrong!</h1>
-				)}
+				)} */}
 			</div>
 		</>
 	);
