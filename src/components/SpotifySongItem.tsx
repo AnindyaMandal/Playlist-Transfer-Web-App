@@ -2,10 +2,13 @@ import React from "react";
 import { TrackItem } from "@/app/definitions/TrackItem";
 import { ArtistData } from "@/app/definitions/ArtistData";
 function SpotifySongItem(props: { track: TrackItem }) {
-	console.log(props.track.trackName);
 	return (
 		<div className="w-full mb-2">
-			<a href={props.track.trackURI} className="spotify_playlist_li ">
+			<a
+				href={props.track.trackURI}
+				target="_blank"
+				className="spotify_playlist_li "
+			>
 				<div>
 					<h1>{props.track.trackName}</h1>
 					<h4>Album: {props.track.albumName}</h4>

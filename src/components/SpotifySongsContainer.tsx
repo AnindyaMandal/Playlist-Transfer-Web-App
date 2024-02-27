@@ -19,12 +19,16 @@ const SpotifySongsContainer = (props: { trackData: TrackData }) => {
 									count
 								}
 							>
-								{/* <h4>{count}: </h4> */}
-								<SpotifySongItem
-									// name={item.name}
-									// trackCount={item.track_total}
-									track={trackItem}
-								/>
+								<div className="flex flex-row ">
+									<h4 className="spotify_playlist_li w-1/12 mb-2">
+										{count}.
+									</h4>
+									<SpotifySongItem
+										// name={item.name}
+										// trackCount={item.track_total}
+										track={trackItem}
+									/>
+								</div>
 							</li>
 						);
 					})

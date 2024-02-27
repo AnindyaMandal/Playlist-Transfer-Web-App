@@ -10,12 +10,12 @@ import SpotifyPlaylistContainer from "@/components/SpotifyPlaylistContainer";
 import getSampleData from "../lib/sampleFile";
 import SpotifySongsContainer from "@/components/SpotifySongsContainer";
 
-const getPlaylistData = async () => {
-	console.log("Getting playlist data...");
-	const response = await getUserPlaylists();
-	// const response = getSampleData();
-	return response;
-};
+// const getPlaylistData = async () => {
+// 	console.log("Getting playlist data...");
+// 	const response = await getUserPlaylists();
+// 	// const response = getSampleData();
+// 	return response;
+// };
 
 const sessionStorageKeys = {
 	userPlaylistData: "userPlaylistSessionData",
@@ -33,6 +33,85 @@ function SpotifyPage() {
 	const [selectedPlaylistTag, setSelectedPlaylistTag] = useState<string>(
 		"No playlist Selected"
 	);
+
+	const [selectedPlaylistID, setSelectedPlaylistID] = useState<string>("");
+
+	function storeToSessionStorage(data: string, key: string) {
+		window.sessionStorage.setItem(key, data);
+	}
+
+	function getFromSessionStorage(key: string) {
+		if (window) {
+			const data = window?.sessionStorage.getItem(key);
+			if (data == undefined || null) {
+				console.log("GetSessionStorage Data null: " + data);
+
+				return null;
+			}
+			const jsonData = JSON.parse(data);
+			console.log(typeof jsonData);
+			console.log("jsonData: " + jsonData);
+			return jsonData;
+		}
+	}
+
+	// Handle clicking on a playlist item
+	// Gets TrackData for playlist clicked
+	// Sets state variable for rendering list of tracks
+	// Sets state variable showing currently selected playlist
+	// Store data into session storage
+	// Check if data exists for playlist in session storage
+	// If so get that data and show to use
+	//
+	//
+	// TODO:
+	// Should find out way to store when data was acquired to give the user option to refresh
+	async function handlePlaylistClick(
+		playlistID: string,
+		playlistName: string,
+		refreshData: boolean = false
+	) {
+		const data = getFromSessionStorage(
+			sessionStorageKeys.playlistTrackData + playlistID
+		);
+
+		if (data != undefined && data != null && refreshData == false) {
+			console.log(
+				"Session storage data for: " + playlistID + " Data: " + data
+			);
+
+			console.log(selectedPlaylistID);
+			setSelectedPlaylistID(playlistID);
+			setSelectedPlaylistSongs(data);
+			setSelectedPlaylistTag(playlistName);
+
+			return;
+		}
+
+		console.log("Getting Songs for: " + playlistID);
+		const endpointData = await getPlaylistTracks(playlistID);
+		console.log("Endpoint Data: " + typeof endpointData);
+		console.log(endpointData);
+
+		if (endpointData !== undefined) {
+			console.log(selectedPlaylistID);
+			setSelectedPlaylistID(playlistID);
+
+			setSelectedPlaylistSongs(endpointData);
+			setSelectedPlaylistTag(playlistName);
+
+			// Store all track data for selected playlist
+			// Key is constant defined at the top + playlistID for unique key per playlist
+			storeToSessionStorage(
+				JSON.stringify(endpointData),
+				sessionStorageKeys.playlistTrackData + playlistID
+			);
+		} else {
+			setSelectedPlaylistID("");
+
+			setSelectedPlaylistTag("No Playlist Selected!");
+		}
+	}
 
 	// Handle click for Get user playlists
 	// Gets playlist data or undefined from Spotify API
@@ -54,62 +133,19 @@ function SpotifyPage() {
 		}
 	};
 
-	// "userPlaylistSessionData" KEY for playlist Data
-	// ""
-	function storeToSessionStorage(data: string, key: string) {
-		window.sessionStorage.setItem(key, data);
-	}
-
-	function getFromSessionStorage(key: string) {
-		if (window) {
-			const data = window?.sessionStorage.getItem(key);
-			if (data == undefined || null) {
-				console.log("Data: " + data);
-
-				return null;
-			}
-			const jsonData = JSON.parse(data);
-			console.log(typeof jsonData);
-			console.log("jsonData: " + jsonData);
-			return jsonData;
-		}
-	}
-
-	// Handle clicking on a playlist item
-	// Gets TrackData for playlist clicked
-	// Sets state variable for rendering list of tracks
-	// Sets state variable showing currently selected playlist
-	// Stores data into session storage
-	//
-	//
-	// TODO:
-	// Store data into session storage
-	// Check if data exists for playlist in session storage
-	// If so get that data and show to use
-	// Should find out way to store when data was acquired to give the user option to refresh
-	async function handlePlaylistClick(
-		playlistID: string,
-		playlistName: string
-	) {
-		console.log("Getting Songs for: " + playlistID);
-		const endpointData = await getPlaylistTracks(playlistID);
-		console.log("Endpoint Data: " + typeof endpointData);
-		console.log(endpointData);
-
-		if (endpointData !== undefined) {
-			setSelectedPlaylistSongs(endpointData);
-			setSelectedPlaylistTag(playlistName);
-
-			// Store all track data for selected playlist
-			// Key is constant defined at the top + playlistID for unique key per playlist
-			storeToSessionStorage(
-				JSON.stringify(endpointData),
+	const handleSaveToPC = (playlistID: string, playlistName: string) => {
+		const fileData = JSON.stringify(
+			getFromSessionStorage(
 				sessionStorageKeys.playlistTrackData + playlistID
-			);
-		} else {
-			setSelectedPlaylistTag("No Playlist Selected!");
-		}
-	}
+			)
+		);
+		const blob = new Blob([fileData], { type: "text/plain" });
+		const url = URL.createObjectURL(blob);
+		const link = document.createElement("a");
+		link.download = `${playlistName}_track_data.json`;
+		link.href = url;
+		link.click();
+	};
 
 	useEffect(() => {
 		console.log("USE EFFECT!");
@@ -139,6 +175,49 @@ function SpotifyPage() {
 						onClick={() => handleClick()}
 					>
 						Get User Playlists
+					</button>
+				</div>
+				<div className="w-5/12">
+					<button
+						type="button"
+						className="spotify_auth_btn w-full"
+						onClick={() => {
+							console.log("Refresh playlist...");
+							console.log(selectedPlaylistID);
+							if (
+								selectedPlaylistID !== "" &&
+								selectedPlaylistTag !== "No Playlist Selected!"
+							) {
+								handlePlaylistClick(
+									selectedPlaylistID,
+									selectedPlaylistTag,
+									true
+								);
+							}
+						}}
+					>
+						Refresh Song List
+					</button>
+				</div>
+				<div className="w-5/12">
+					<button
+						type="button"
+						className="spotify_auth_btn w-full"
+						onClick={() => {
+							console.log("Refresh playlist...");
+							console.log(selectedPlaylistID);
+							if (
+								selectedPlaylistID !== "" &&
+								selectedPlaylistTag !== "No Playlist Selected!"
+							) {
+								handleSaveToPC(
+									selectedPlaylistID,
+									selectedPlaylistTag
+								);
+							}
+						}}
+					>
+						Download Current Playlist Data
 					</button>
 				</div>
 			</div>
@@ -183,13 +262,13 @@ function SpotifyPage() {
 							trackData={selectedPlaylistSongs}
 						></SpotifySongsContainer>
 					) : (
-						<h2>
-							{selectedPlaylistTag != "No playlist Selected" ? (
+						<div>
+							{selectedPlaylistTag != "No Playlist Selected!" ? (
 								<h1>SONG DATA ERROR</h1>
 							) : (
-								<></>
+								<h1></h1>
 							)}
-						</h2>
+						</div>
 					)}
 				</div>
 			</div>
