@@ -10,6 +10,8 @@ import SpotifyPlaylistContainer from "@/components/SpotifyPlaylistContainer";
 import getSampleData from "../lib/sampleFile";
 import SpotifySongsContainer from "@/components/SpotifySongsContainer";
 
+import { searchTrackYT } from "../lib/ytWebApi";
+
 // const getPlaylistData = async () => {
 // 	console.log("Getting playlist data...");
 // 	const response = await getUserPlaylists();
@@ -26,6 +28,7 @@ function SpotifyPage() {
 	// const session = await getServerSession(options);
 	// const playlistData = await SpotifyWebApi.getUserPlaylists();
 
+	const [youtubeData, setYoutubeData] = useState<any>(null);
 	const [playlistData, setPlaylistData] = useState<any>(null);
 	const [selectedPlaylistSongs, setSelectedPlaylistSongs] =
 		useState<any>(null);
@@ -147,6 +150,25 @@ function SpotifyPage() {
 		link.click();
 	};
 
+	const handleYTdataClick = async (trackName: string, query: string) => {
+		const endpointData = await searchTrackYT(query);
+		console.log("HANDING YT CLICK \t SONG: " + trackName);
+		console.log("SEARCH QUERY: " + query);
+
+		if (endpointData !== undefined) {
+			console.log("JSON YT Data:");
+			console.log(endpointData);
+			setYoutubeData(endpointData);
+
+			storeToSessionStorage(
+				JSON.stringify(endpointData),
+				trackName + "_YT_data"
+			);
+		} else {
+			console.log("Something went wrong fetching YT data");
+		}
+	};
+
 	useEffect(() => {
 		console.log("USE EFFECT!");
 		// Get playlist session data from storage
@@ -155,6 +177,11 @@ function SpotifyPage() {
 
 	return (
 		<div>
+			{youtubeData ? (
+				<pre>{JSON.stringify(youtubeData, null, 2)}</pre>
+			) : (
+				<h1>no yt data</h1>
+			)}
 			<div className="flex flex-col w-full ml-2">
 				<h1 className="text-center w-5/12">SPOTIFY</h1>
 				<div className="w-5/12 ">
@@ -260,6 +287,7 @@ function SpotifyPage() {
 					{selectedPlaylistSongs ? (
 						<SpotifySongsContainer
 							trackData={selectedPlaylistSongs}
+							handleOnClick={handleYTdataClick}
 						></SpotifySongsContainer>
 					) : (
 						<div>

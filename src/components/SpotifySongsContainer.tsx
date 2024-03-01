@@ -1,9 +1,15 @@
+"use client";
 import React from "react";
 import SpotifySongItem from "./SpotifySongItem";
 import { TrackData } from "@/app/definitions/TrackData";
 import { TrackItem } from "@/app/definitions/TrackItem";
+import { Button } from "./ui/button";
+import { ArtistData } from "@/app/definitions/ArtistData";
 
-const SpotifySongsContainer = (props: { trackData: TrackData }) => {
+const SpotifySongsContainer = (props: {
+	trackData: TrackData;
+	handleOnClick: Function;
+}) => {
 	let count = 0;
 	return (
 		<div>
@@ -28,6 +34,25 @@ const SpotifySongsContainer = (props: { trackData: TrackData }) => {
 										// trackCount={item.track_total}
 										track={trackItem}
 									/>
+									<Button
+										className="border-2 border-red-600"
+										onClick={() => {
+											const artists =
+												trackItem.trackArtists.map(
+													(artist: ArtistData) => {
+														return artist.name;
+													}
+												);
+											props.handleOnClick(
+												trackItem.trackName,
+												trackItem.trackName +
+													" " +
+													artists.join(" ")
+											);
+										}}
+									>
+										YT Search
+									</Button>
 								</div>
 							</li>
 						);

@@ -5,6 +5,7 @@ import { PlaylistItem } from "../definitions/PlaylistItem";
 import { TrackData } from "../definitions/TrackData";
 import { TrackItem } from "../definitions/TrackItem";
 
+// Failsafe when its more than 10 no more API calls, change this in the functions below
 let apiCallCount = 0;
 
 // Gets users playlists
@@ -136,6 +137,11 @@ export async function getUserPlaylists(
 	}
 }
 
+// Gets all tracks from a playlist
+// If there are more than 50, recursively gets the next 50 until no more left
+// TODO:
+//
+// Look into pagination for this, no reason to get 4k songs at once from playlists.
 export async function getPlaylistTracks(
 	playlistID: string,
 	next: string | null = null

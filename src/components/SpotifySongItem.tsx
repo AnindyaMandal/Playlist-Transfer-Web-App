@@ -2,6 +2,9 @@ import React from "react";
 import { TrackItem } from "@/app/definitions/TrackItem";
 import { ArtistData } from "@/app/definitions/ArtistData";
 function SpotifySongItem(props: { track: TrackItem }) {
+	const artists = props.track.trackArtists.map((artist: ArtistData) => {
+		return artist.name;
+	});
 	return (
 		<div className="w-full mb-2">
 			<a
@@ -15,11 +18,12 @@ function SpotifySongItem(props: { track: TrackItem }) {
 
 					<h4>
 						Artists:{" "}
-						{props.track.trackArtists
+						{/* {props.track.trackArtists
 							.map((artist: ArtistData) => {
 								return artist.name;
 							})
-							.join(" & ")}
+							.join(" & ")} */}
+						{artists.join(" & ")}
 					</h4>
 				</div>
 				<div>
