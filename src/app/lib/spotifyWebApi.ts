@@ -255,6 +255,7 @@ export async function getPlaylistTracks(
 					// trackURI: element.track.uri,
 					trackURI:
 						"http://open.spotify.com/track/" + element.track.id,
+					ytURI: "",
 				};
 				return items;
 			}),

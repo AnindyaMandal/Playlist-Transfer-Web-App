@@ -11,6 +11,9 @@ import getSampleData from "../lib/sampleFile";
 import SpotifySongsContainer from "@/components/SpotifySongsContainer";
 
 import { searchTrackYT } from "../lib/ytWebApi";
+import { TrackItem } from "../definitions/TrackItem";
+import { TrackData } from "../definitions/TrackData";
+import { ArtistData } from "../definitions/ArtistData";
 
 // const getPlaylistData = async () => {
 // 	console.log("Getting playlist data...");
@@ -136,6 +139,8 @@ function SpotifyPage() {
 		}
 	};
 
+	// Handle click to Save playlist data on pc
+	// downloads playlist data as JSON
 	const handleSaveToPC = (playlistID: string, playlistName: string) => {
 		const fileData = JSON.stringify(
 			getFromSessionStorage(
@@ -148,6 +153,45 @@ function SpotifyPage() {
 		link.download = `${playlistName}_track_data.json`;
 		link.href = url;
 		link.click();
+	};
+
+	const handleYouTubeSearchPList = async () => {
+		// const localPlaylistSongs = { ...selectedPlaylistSongs };
+		const localPlaylistSongs = JSON.parse(
+			JSON.stringify(selectedPlaylistSongs)
+		);
+		localPlaylistSongs.items.forEach(async (trackItem: TrackItem) => {
+			const artists = trackItem.trackArtists.map((artist: ArtistData) => {
+				return artist.name;
+			});
+			let query = trackItem.trackName + " " + artists.join(" ");
+			const endpointData = await searchTrackYT(query);
+			if (endpointData !== undefined) {
+				console.log("JSON YT Data:");
+				console.log(endpointData);
+				trackItem.ytURI = endpointData;
+			} else {
+				console.log("Something went wrong fetching YT playlist data");
+			}
+		});
+
+		// for (let trackItem of localPlaylistSongs.items) {
+		// 	let artists = trackItem.trackArtists.map((artist: ArtistData) => {
+		// 		return artist.name;
+		// 	});
+		// 	let query = trackItem.trackName + " " + artists.join(" ");
+		// 	let endpointData = await searchTrackYT(query);
+		// 	if (endpointData !== undefined) {
+		// 		console.log("JSON YT Data:");
+		// 		console.log(endpointData);
+		// 		trackItem.ytURI = endpointData;
+		// 	} else {
+		// 		console.log("Something went wrong fetching YT playlist data");
+		// 	}
+		// }
+		console.log("Done searching YT!");
+		console.log(localPlaylistSongs);
+		setSelectedPlaylistSongs(localPlaylistSongs);
 	};
 
 	const handleYTdataClick = async (trackName: string, query: string) => {
@@ -226,6 +270,29 @@ function SpotifyPage() {
 						Refresh Song List
 					</button>
 				</div>
+				{selectedPlaylistID !== "" &&
+				selectedPlaylistTag !== "No Playlist Selected!" ? (
+					<div className="w-5/12">
+						<button
+							type="button"
+							className="youtube_auth_btn w-full"
+							onClick={() => {
+								console.log("Getting YT links for playlist...");
+								console.log(selectedPlaylistID);
+								if (
+									selectedPlaylistID !== "" &&
+									selectedPlaylistTag !==
+										"No Playlist Selected!"
+								) {
+									handleYouTubeSearchPList();
+								}
+							}}
+						>
+							YouTube Current Playlist
+						</button>
+					</div>
+				) : null}
+
 				<div className="w-5/12">
 					<button
 						type="button"

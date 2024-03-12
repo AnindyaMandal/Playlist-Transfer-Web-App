@@ -3,7 +3,7 @@ import { authenticate } from "@google-cloud/local-auth";
 
 const youtube = google.youtube("v3");
 const path = require("path");
-
+// ----------------------- UNUSED ----------------------------- //
 async function searchTrackYT(query: string) {
 	const auth = await authenticate({
 		keyfilePath: path.join(__dirname, "../../../keys.json"),

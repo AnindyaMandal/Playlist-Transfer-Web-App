@@ -9,4 +9,5 @@ export interface TrackItem {
 	albumArtists: ArtistData[];
 	popularity: number;
 	trackURI: string;
+	ytURI: string;
 }
