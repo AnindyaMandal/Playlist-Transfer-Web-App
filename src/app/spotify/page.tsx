@@ -14,6 +14,7 @@ import { searchTrackYT } from "../lib/ytWebApi";
 import { TrackItem } from "../definitions/TrackItem";
 import { TrackData } from "../definitions/TrackData";
 import { ArtistData } from "../definitions/ArtistData";
+import { mongoAddSongData } from "../lib/actions/song.actions";
 
 // const getPlaylistData = async () => {
 // 	console.log("Getting playlist data...");
@@ -155,11 +156,18 @@ function SpotifyPage() {
 		link.click();
 	};
 
+	// Searches all songs in a playlist on YouTube
+	// Finds best fit links and updates the useState variable
+	// This reflects changes on DOM to show YouTube Hyperlink
 	const handleYouTubeSearchPList = async () => {
 		// const localPlaylistSongs = { ...selectedPlaylistSongs };
 		const localPlaylistSongs = JSON.parse(
 			JSON.stringify(selectedPlaylistSongs)
 		);
+
+		// Some issue with forEach and ASYNC it behaves unexpectedly
+		// Code here for reference
+		/*
 		localPlaylistSongs.items.forEach(async (trackItem: TrackItem) => {
 			const artists = trackItem.trackArtists.map((artist: ArtistData) => {
 				return artist.name;
@@ -174,26 +182,32 @@ function SpotifyPage() {
 				console.log("Something went wrong fetching YT playlist data");
 			}
 		});
+		*/
 
-		// for (let trackItem of localPlaylistSongs.items) {
-		// 	let artists = trackItem.trackArtists.map((artist: ArtistData) => {
-		// 		return artist.name;
-		// 	});
-		// 	let query = trackItem.trackName + " " + artists.join(" ");
-		// 	let endpointData = await searchTrackYT(query);
-		// 	if (endpointData !== undefined) {
-		// 		console.log("JSON YT Data:");
-		// 		console.log(endpointData);
-		// 		trackItem.ytURI = endpointData;
-		// 	} else {
-		// 		console.log("Something went wrong fetching YT playlist data");
-		// 	}
-		// }
+		for (let trackItem of localPlaylistSongs.items) {
+			let artists = trackItem.trackArtists.map((artist: ArtistData) => {
+				return artist.name;
+			});
+			let query = trackItem.trackName + " " + artists.join(" ");
+			let endpointData = await searchTrackYT(query);
+			if (endpointData !== undefined) {
+				console.log("JSON YT Data:");
+				console.log(endpointData);
+				trackItem.ytURI = endpointData;
+				mongoAddSongData(trackItem);
+			} else {
+				console.log("Something went wrong fetching YT playlist data");
+			}
+		}
 		console.log("Done searching YT!");
 		console.log(localPlaylistSongs);
 		setSelectedPlaylistSongs(localPlaylistSongs);
 	};
 
+	// TODO:
+	// REMOVE NOT USED ANYMORE
+	// REMEMBER TO REMOVE THE UGLY BUTTONS FOR GETTING EACH SONG AS WELL
+	// COULD BE REVAMPED AS A TEST FUNC
 	const handleYTdataClick = async (trackName: string, query: string) => {
 		const endpointData = await searchTrackYT(query);
 		console.log("HANDING YT CLICK \t SONG: " + trackName);
@@ -221,11 +235,6 @@ function SpotifyPage() {
 
 	return (
 		<div>
-			{youtubeData ? (
-				<pre>{JSON.stringify(youtubeData, null, 2)}</pre>
-			) : (
-				<h1>no yt data</h1>
-			)}
 			<div className="flex flex-col w-full ml-2">
 				<h1 className="text-center w-5/12">SPOTIFY</h1>
 				<div className="w-5/12 ">

@@ -141,7 +141,7 @@ function findBestMatch(searchQuery: string, data: any) {
 	];
 
 	// Restricted keywords in the YT vid title
-	let restrictedKeywords: any[] = [];
+	let restrictedKeywords: string[] = [];
 	keywords.forEach((keyword: string) => {
 		if (
 			searchQuery

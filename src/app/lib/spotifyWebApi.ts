@@ -10,6 +10,8 @@ let apiCallCount = 0;
 
 // Gets users playlists
 // If there are more than 50, recursively gets the next 50 until no more left
+// TODO:
+// stop returning undefined, return 404 or the actual error
 export async function getUserPlaylists(
 	next: string | null = null
 ): Promise<PlaylistData | undefined> {
@@ -245,7 +247,6 @@ export async function getPlaylistTracks(
 							const artists = {
 								id: albumArtist.id,
 								name: albumArtist.name,
-								popularity: null,
 								artistURI: albumArtist.uri,
 							};
 							return artists;
