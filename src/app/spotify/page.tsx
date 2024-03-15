@@ -14,7 +14,10 @@ import { searchTrackYT } from "../lib/ytWebApi";
 import { TrackItem } from "../definitions/TrackItem";
 import { TrackData } from "../definitions/TrackData";
 import { ArtistData } from "../definitions/ArtistData";
-import { mongoAddSongData } from "../lib/actions/song.actions";
+import {
+	mongoAddSongData,
+	mongoFindSongExists,
+} from "../lib/actions/song.actions";
 
 // const getPlaylistData = async () => {
 // 	console.log("Getting playlist data...");
@@ -185,11 +188,24 @@ function SpotifyPage() {
 		*/
 
 		for (let trackItem of localPlaylistSongs.items) {
+			// mongofindsongexists returns false when nothing found or the URI
+			let foundYtURI = await mongoFindSongExists(trackItem);
+			if (foundYtURI !== false) {
+				console.log(
+					"Found existing YouTube URI for " + trackItem.trackName
+				);
+				trackItem.ytURI = foundYtURI;
+				continue;
+			}
+			console.log(
+				"\n\tNo existing MongoDB entry for " + trackItem.trackName
+			);
 			let artists = trackItem.trackArtists.map((artist: ArtistData) => {
 				return artist.name;
 			});
 			let query = trackItem.trackName + " " + artists.join(" ");
 			let endpointData = await searchTrackYT(query);
+
 			if (endpointData !== undefined) {
 				console.log("JSON YT Data:");
 				console.log(endpointData);

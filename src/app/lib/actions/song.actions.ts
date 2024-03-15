@@ -22,6 +22,40 @@ export const mongoAddSongData = async (song: TrackItem) => {
 	}
 };
 
+// TODO:
+// Finds if song exists via spotify ID
+// If not returns false
+// Otherwise returns the ytURI for the song
+// Should only be used to find YouTube URIs
+// I think
+export const mongoFindSongExists = async (song: TrackItem) => {
+	try {
+		console.log(
+			"Finding song exists:\t" + song.trackName + "\t" + song.trackID
+		);
+		await connectToDatabase();
+
+		const foundSong = await Song.findOne(
+			{ spotifyID: `${song.trackID}` },
+			"youtubeURI"
+		).exec();
+		// const foundSong = await Song.findOne(
+		// 	{ spotifyID: `3RXn3kWkPjRKrN5wx2LCZx` },
+		// 	"youtubeURI"
+		// ).exec();
+
+		if (foundSong !== null) {
+			console.log(foundSong.youtubeURI);
+			return foundSong.youtubeURI;
+		} else {
+			console.log("Song not in DB");
+			return false;
+		}
+	} catch (error) {
+		handleError(error);
+	}
+};
+
 function convertTrackToSchema(song: TrackItem): AddSongItem {
 	const newSong: AddSongItem = {
 		name: song.trackName,

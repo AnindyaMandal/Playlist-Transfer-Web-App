@@ -7,7 +7,7 @@ let cached = (global as any).mongoose || { conn: null, promise: null };
 
 export const connectToDatabase = async () => {
 	if (cached.conn) {
-		console.log("CACHED CONNECTION EXISTS!");
+		console.log("\n\tCACHED CONNECTION EXISTS!\n");
 		return cached.conn;
 	}
 
@@ -29,6 +29,6 @@ export const connectToDatabase = async () => {
 		});
 
 	cached.conn = await cached.promise;
-	console.log("Connecting to MongoDB...");
+	console.log("\n\tNo existing Connection..\tConnecting to MongoDB...\n");
 	return cached.conn;
 };
