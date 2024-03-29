@@ -37,11 +37,11 @@ export const options: NextAuthOptions = {
 	callbacks: {
 		async redirect({ url, baseUrl }) {
 			if (url.startsWith("/")) {
-				console.log("Callback: " + `${baseUrl}  ${url}`);
+				console.log("Callback /: " + `${baseUrl}  ${url}`);
 				return `${baseUrl}  ${url}`;
 			} else if (new URL(url).origin === baseUrl) {
-				console.log("Callback: " + `${baseUrl}  ${url}`);
-				return url;
+				console.log("Callback url is base: " + `${baseUrl}  ${url}`);
+				return baseUrl + "/spotify";
 			}
 			return baseUrl;
 		},

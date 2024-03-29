@@ -164,7 +164,7 @@ function SpotifyPage() {
 	// This reflects changes on DOM to show YouTube Hyperlink
 	const handleYouTubeSearchPList = async () => {
 		// const localPlaylistSongs = { ...selectedPlaylistSongs };
-		const localPlaylistSongs = JSON.parse(
+		const localPlaylistSongs: TrackData = JSON.parse(
 			JSON.stringify(selectedPlaylistSongs)
 		);
 
@@ -217,6 +217,10 @@ function SpotifyPage() {
 		}
 		console.log("Done searching YT!");
 		console.log(localPlaylistSongs);
+		storeToSessionStorage(
+			JSON.stringify(localPlaylistSongs),
+			sessionStorageKeys.playlistTrackData + localPlaylistSongs.playlistID
+		);
 		setSelectedPlaylistSongs(localPlaylistSongs);
 	};
 

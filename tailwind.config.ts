@@ -17,6 +17,9 @@ const config = {
 				"2xl": "1400px",
 			},
 		},
+		fontFamily: {
+			jelleeFont: [`"Jellee Typeface"`, "sans-serif"],
+		},
 		extend: {
 			colors: {
 				border: "hsl(var(--border))",

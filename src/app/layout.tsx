@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Nav from "@/components/Nav";
+import { ThemeProvider } from "@/components/themeProvider";
 
 // const inter = Inter({ subsets: ["latin"] });
 export const fontSans = FontSans({
@@ -26,8 +27,15 @@ export default function RootLayout({
 					fontSans.variable
 				)}
 			>
-				<Nav />
-				{children}
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
+					<Nav />
+					{children}
+				</ThemeProvider>
 			</body>
 		</html>
 	);

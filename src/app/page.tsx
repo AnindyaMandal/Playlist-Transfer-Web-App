@@ -44,6 +44,96 @@ export default async function Home() {
 						</button>
 					</Link>
 				</div>
+				<div id="instructions">
+					<div>
+						<h1>SPOTIFY TO YOUTUBE</h1>
+						<h3>
+							Easily import your Spotify Playlists to YouTube for
+							FREE!
+						</h3>
+					</div>
+					<div>
+						<h1>How do I transfer playlists?</h1>
+						<h4>
+							This step by step tutorial will guide you to move
+							your playlists to YouTube
+						</h4>
+					</div>
+					<div>
+						<h2>Step One: Authenticate with Spotify</h2>
+						<h3>
+							Click Authenticate to log in to your Spotify account
+						</h3>
+						<h3>Grant permissions to access your playlist data</h3>
+					</div>
+					<div>
+						<h2>Step Two: Get playlists</h2>
+						<h3>
+							Click on Get User Playlists to retrieve a list of
+							your playlists
+						</h3>
+					</div>
+					<div>
+						<h2>Step Three: Select a playlist for transfer</h2>
+						<h3>
+							You can see a list of songs that are in your
+							selected playlist
+						</h3>
+					</div>
+					<div>
+						<h2>Step Four: Search playlist songs on YouTube</h2>
+						<h3>
+							Once you have selected a playlist, click on YouTube
+							Current Playlist
+						</h3>
+						<h3>
+							Once the search is complete, each song in the
+							playlist will have a link that takes you to a
+							matching YouTube video
+						</h3>
+						<h3>
+							Double check songs that have special characters in
+							the title or artist name
+						</h3>
+					</div>
+					<div>
+						<h2>Step Five: Download data</h2>
+						<h3>
+							Click Download Song data to download your playlist
+							songs and YouTube links as a JSON file
+						</h3>
+					</div>
+					<div>
+						<h2>Step Six: Download Script</h2>
+						<h3>
+							Due to API limitations from Google, this service is
+							unable to automatically Search and add more than 200
+							songs a day
+						</h3>
+						<h3>
+							In order to keep this service free, this python
+							script will search the songs from the JSON file on
+							your Web broswer and add them to a YouTube playlist
+						</h3>
+						<h3>
+							You must be signed into Google from your default
+							browser. Currently supports Chrome and Firefox.
+						</h3>
+						<h3>
+							It will automatically open tabs to songs on YouTube
+							and control your mouse to add them to a playlist.
+						</h3>
+						<h3>
+							This means that you cannot use your computer while
+							this task is running, otherwise it will fail before
+							adding all songs.
+						</h3>
+						<h3>
+							Run this program when you know the computer will not
+							be used.
+						</h3>
+					</div>
+				</div>
 				{/* {session && playlistData ? (
 					<ul>
 						{playlistData.items.map((item: PlaylistItem) => {
