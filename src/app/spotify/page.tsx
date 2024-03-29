@@ -359,7 +359,7 @@ function SpotifyPage() {
 				<h1>No session!</h1>
 			)} */}
 
-			<div className="flex flex-row ml-2">
+			<div className="flex flex-row ml-2 justify-around">
 				<div className="w-5/12">
 					<div className="w-full items-center">
 						<h2 className="w-full text-center">
@@ -388,7 +388,7 @@ function SpotifyPage() {
 					) : (
 						<div>
 							{selectedPlaylistTag != "No Playlist Selected!" ? (
-								<h1>SONG DATA ERROR</h1>
+								<h1>Please select a playlist</h1>
 							) : (
 								<h1></h1>
 							)}

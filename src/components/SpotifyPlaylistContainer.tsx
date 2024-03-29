@@ -2,6 +2,7 @@ import React from "react";
 import { PlaylistData } from "@/app/definitions/PlaylistData";
 import { PlaylistItem } from "@/app/definitions/PlaylistItem";
 import SpotifyPlaylistItem from "./SpotifyPlaylistItem";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const SpotifyPlaylistContainer = (props: {
 	playlistData: PlaylistData | undefined;
@@ -9,7 +10,7 @@ const SpotifyPlaylistContainer = (props: {
 }) => {
 	console.log(props);
 	return (
-		<div>
+		<ScrollArea className="h-[30vw] w-full rounded-md border">
 			<ul>
 				{props.playlistData ? (
 					props.playlistData.items.map((item: PlaylistItem) => {
@@ -29,7 +30,7 @@ const SpotifyPlaylistContainer = (props: {
 					</div>
 				)}
 			</ul>
-		</div>
+		</ScrollArea>
 	);
 };
 
