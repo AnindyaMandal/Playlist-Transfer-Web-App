@@ -106,4 +106,40 @@
 	justify-content: space-between;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
+	margin-right: 10px;
+}
+
+.step_title_text {
+	font-size: 2.5vw;
+	font-family: jellefont;
+	font-weight: bolder;
+	text-transform: uppercase;
+}
+.step_desc_text {
+}
+
+.step_title_container {
+	border-top: 0.3vw dashed #ffffff;
+	/* border-bottom: 0.3vw dashed #ffffff; */
+	padding-bottom: 1vw;
+	padding-top: 1vw;
+	margin-top: 1vw;
+	margin-bottom: 1vw;
+}
+
+.step_desc_container {
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+	margin-left: 1vw;
+	border-left: 0.2vw dotted #ffffff5d;
+	padding-left: 2vw;
+}
+
+.step_desc_container > h3 {
+	font-size: 1.5vw;
+	font-family: jellefont;
+	margin-top: 1vw;
+	padding-left: 0.5vw;
+	color: #ffffffcc;
+	border-left: 0.2vw solid #4f4f4f4d;
 }

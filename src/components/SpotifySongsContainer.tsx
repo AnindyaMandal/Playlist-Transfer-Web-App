@@ -13,7 +13,7 @@ const SpotifySongsContainer = (props: {
 }) => {
 	let count = 0;
 	return (
-		<ScrollArea className="h-[30vw] w-full rounded-md border">
+		<ScrollArea className="h-[30vw] w-full rounded-md">
 			<ul>
 				{props.trackData ? (
 					props.trackData.items.map((trackItem: TrackItem) => {

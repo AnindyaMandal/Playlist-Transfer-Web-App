@@ -12,7 +12,7 @@ function SpotifyPlaylistItem(props: {
 	return (
 		<div className="w-full mb-2">
 			<button
-				className="w-full spotify_playlist_li"
+				className="w-full spotify_playlist_li  mr-2"
 				onClick={() => {
 					props.handleOnClick(props.playlistID, props.item.name);
 				}}

@@ -10,7 +10,7 @@ const SpotifyPlaylistContainer = (props: {
 }) => {
 	console.log(props);
 	return (
-		<ScrollArea className="h-[30vw] w-full rounded-md border">
+		<ScrollArea className="h-[30vw] w-full rounded-md">
 			<ul>
 				{props.playlistData ? (
 					props.playlistData.items.map((item: PlaylistItem) => {
