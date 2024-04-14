@@ -22,17 +22,17 @@ export const options: NextAuthOptions = {
 				"https://accounts.spotify.com/authorize?scope=" +
 				scopes.join("+"),
 		}),
-		GoogleProvider({
-			clientId: process.env.GOOGLE_CLIENT_ID as string,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-			authorization: {
-				params: {
-					prompt: "consent",
-					access_type: "offline",
-					response_type: "code",
-				},
-			},
-		}),
+		// GoogleProvider({
+		// 	clientId: process.env.GOOGLE_CLIENT_ID as string,
+		// 	clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+		// 	authorization: {
+		// 		params: {
+		// 			prompt: "consent",
+		// 			access_type: "offline",
+		// 			response_type: "code",
+		// 		},
+		// 	},
+		// }),
 	],
 	callbacks: {
 		async redirect({ url, baseUrl }) {
@@ -58,17 +58,17 @@ export const options: NextAuthOptions = {
 				console.log(account.refresh_token);
 			}
 
-			if (account?.provider === "google") {
-				const accessToken = account.access_token;
-				process.env.GOOGLE_ACCESS_TOKEN = accessToken;
-				console.log(
-					"GOOGLE ACCESS TOKEN: " + process.env.GOOGLE_ACCESS_TOKEN
-				);
-				console.log(account.token_type);
-				console.log(account.scope);
-				console.log(account.expires_at);
-				console.log(account.refresh_token);
-			}
+			// if (account?.provider === "google") {
+			// 	const accessToken = account.access_token;
+			// 	process.env.GOOGLE_ACCESS_TOKEN = accessToken;
+			// 	console.log(
+			// 		"GOOGLE ACCESS TOKEN: " + process.env.GOOGLE_ACCESS_TOKEN
+			// 	);
+			// 	console.log(account.token_type);
+			// 	console.log(account.scope);
+			// 	console.log(account.expires_at);
+			// 	console.log(account.refresh_token);
+			// }
 			return true;
 		},
 	},

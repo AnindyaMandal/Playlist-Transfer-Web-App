@@ -1,13 +1,12 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { options } from "../api/auth/[...nextauth]/options";
-// import { SpotifyWebApi } from "../lib/spotifyWebApi";
+// import { options } from "../api/auth/[...nextauth]/options";
 import { getPlaylistTracks, getUserPlaylists } from "../lib/spotifyWebApi";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 
 import SpotifyPlaylistContainer from "@/components/SpotifyPlaylistContainer";
-import getSampleData from "../lib/sampleFile";
+// import getSampleData from "../lib/sampleFile";
 import SpotifySongsContainer from "@/components/SpotifySongsContainer";
 
 import { searchTrackYT } from "../lib/ytWebApi";
@@ -138,7 +137,7 @@ function SpotifyPage() {
 
 			storeToSessionStorage(
 				JSON.stringify(endpointData),
-				sessionStorageKeys.playlistTrackData
+				sessionStorageKeys.userPlaylistData
 			);
 		}
 	};
@@ -250,98 +249,105 @@ function SpotifyPage() {
 	useEffect(() => {
 		console.log("USE EFFECT!");
 		// Get playlist session data from storage
-		setPlaylistData(getFromSessionStorage("playlistSessionData"));
+		setPlaylistData(
+			getFromSessionStorage(sessionStorageKeys.userPlaylistData)
+		);
 	}, []);
 
 	return (
 		<div>
-			<div className="flex flex-col w-full ml-2">
-				<h1 className="text-center w-5/12">SPOTIFY</h1>
-				<div className="w-5/12 ">
-					<Link href="/api/auth/signin/spotify">
+			<div className="flex flex-row w-full ml-2">
+				<div className="flex flex-col w-full ml-2 items-center">
+					<div className="w-9/12">
+						<Link href="/api/auth/signin/spotify">
+							<button
+								type="button"
+								className="spotify_auth_btn w-full"
+							>
+								Authenticate
+							</button>
+						</Link>
+					</div>
+					<div className="w-9/12">
 						<button
 							type="button"
 							className="spotify_auth_btn w-full"
+							onClick={() => handleClick()}
 						>
-							Authenticate
+							Get User Playlists
 						</button>
-					</Link>
-				</div>
-
-				<div className="w-5/12">
-					<button
-						type="button"
-						className="spotify_auth_btn w-full"
-						onClick={() => handleClick()}
-					>
-						Get User Playlists
-					</button>
-				</div>
-				<div className="w-5/12">
-					<button
-						type="button"
-						className="spotify_auth_btn w-full"
-						onClick={() => {
-							console.log("Refresh playlist...");
-							console.log(selectedPlaylistID);
-							if (
-								selectedPlaylistID !== "" &&
-								selectedPlaylistTag !== "No Playlist Selected!"
-							) {
-								handlePlaylistClick(
-									selectedPlaylistID,
-									selectedPlaylistTag,
-									true
-								);
-							}
-						}}
-					>
-						Refresh Song List
-					</button>
-				</div>
-				{selectedPlaylistID !== "" &&
-				selectedPlaylistTag !== "No Playlist Selected!" ? (
-					<div className="w-5/12">
+					</div>
+					<div className="w-9/12">
 						<button
 							type="button"
-							className="youtube_auth_btn w-full"
+							className="spotify_auth_btn w-full"
 							onClick={() => {
-								console.log("Getting YT links for playlist...");
+								console.log("Refresh playlist...");
 								console.log(selectedPlaylistID);
 								if (
 									selectedPlaylistID !== "" &&
 									selectedPlaylistTag !==
 										"No Playlist Selected!"
 								) {
-									handleYouTubeSearchPList();
+									handleSaveToPC(
+										selectedPlaylistID,
+										selectedPlaylistTag
+									);
 								}
 							}}
 						>
-							YouTube Current Playlist
+							Download Current Playlist Data
 						</button>
 					</div>
-				) : null}
-
-				<div className="w-5/12">
-					<button
-						type="button"
-						className="spotify_auth_btn w-full"
-						onClick={() => {
-							console.log("Refresh playlist...");
-							console.log(selectedPlaylistID);
-							if (
-								selectedPlaylistID !== "" &&
-								selectedPlaylistTag !== "No Playlist Selected!"
-							) {
-								handleSaveToPC(
-									selectedPlaylistID,
-									selectedPlaylistTag
-								);
-							}
-						}}
-					>
-						Download Current Playlist Data
-					</button>
+				</div>
+				<div className="flex flex-col w-full items-center">
+					<div className="w-9/12">
+						<button
+							type="button"
+							className="spotify_auth_btn w-full"
+							onClick={() => {
+								console.log("Refresh playlist...");
+								console.log(selectedPlaylistID);
+								if (
+									selectedPlaylistID !== "" &&
+									selectedPlaylistTag !==
+										"No Playlist Selected!"
+								) {
+									handlePlaylistClick(
+										selectedPlaylistID,
+										selectedPlaylistTag,
+										true
+									);
+								}
+							}}
+						>
+							Refresh Song List
+						</button>
+					</div>
+					{selectedPlaylistID !== "" &&
+					selectedPlaylistTag !== "No Playlist Selected!" ? (
+						<div className="w-9/12">
+							<button
+								type="button"
+								className="youtube_auth_btn w-full"
+								onClick={() => {
+									console.log(
+										"Getting YT links for playlist..."
+									);
+									console.log(selectedPlaylistID);
+									if (
+										selectedPlaylistID !== "" &&
+										selectedPlaylistTag !==
+											"No Playlist Selected!"
+									) {
+										handleYouTubeSearchPList();
+									}
+								}}
+							>
+								YouTube Current Playlist
+							</button>
+						</div>
+					) : null}
 				</div>
 			</div>
 			{/* {session ? (
@@ -362,7 +368,7 @@ function SpotifyPage() {
 			<div className="flex flex-row ml-2 justify-around">
 				<div className="w-5/12">
 					<div className="w-full items-center">
-						<h2 className="w-full text-center">
+						<h2 className="w-full text-center mt-2 mb-2">
 							User&apos;s Playlists:
 						</h2>
 					</div>
@@ -377,7 +383,7 @@ function SpotifyPage() {
 				</div>
 
 				<div className="ml-2 w-5/12">
-					<h2 className="w-full text-center">
+					<h2 className="w-full text-center mt-2 mb-2">
 						Selected Playlist: {selectedPlaylistTag}
 					</h2>
 					{selectedPlaylistSongs ? (
