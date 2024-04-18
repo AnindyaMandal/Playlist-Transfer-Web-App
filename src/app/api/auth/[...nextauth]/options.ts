@@ -1,11 +1,14 @@
 import type { NextAuthOptions } from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
-import GoogleProvider from "next-auth/providers/google";
+// import GoogleProvider from "next-auth/providers/google";
+import { generate } from "short-uuid";
+import { cookies } from "next/headers";
+import { addSessionData } from "@/app/lib/actions/sessionUUID.actions";
 
 const scopes = [
 	"user-read-email",
 	"user-read-private",
-	"playlist-modify-private",
+	// "playlist-modify-private",
 	"playlist-read-private",
 	"user-library-read",
 	"user-read-recently-played",
@@ -48,14 +51,34 @@ export const options: NextAuthOptions = {
 		async signIn({ user, account, profile }) {
 			if (account?.provider === "spotify") {
 				const accessToken = account.access_token;
+				const expireTime = account.expires_at;
+				const uuid = generate();
 				process.env.SPOTIFY_ACCESS_TOKEN = accessToken;
 				console.log(
 					"SPOTIFY ACCESS TOKEN: " + process.env.SPOTIFY_ACCESS_TOKEN
 				);
+				console.log("UUID:\t" + uuid);
 				console.log(account.token_type);
 				console.log(account.scope);
-				console.log(account.expires_at);
-				console.log(account.refresh_token);
+				console.log("Current: " + Math.round(Date.now() / 1000));
+				console.log("Expires: " + account.expires_at);
+				console.log(
+					"Difference: ",
+					expireTime! - Math.round(Date.now() / 1000)
+				);
+
+				console.log(user);
+				console.log(profile);
+				console.log(
+					"existing session cookie: " + cookies().get("sessionID")
+				);
+
+				cookies().set("sessionID", uuid, {
+					maxAge: 3600,
+					sameSite: "lax",
+				});
+
+				await addSessionData(uuid.toString(), accessToken!);
 			}
 
 			// if (account?.provider === "google") {

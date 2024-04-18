@@ -2,6 +2,8 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 // import { options } from "../api/auth/[...nextauth]/options";
+import { cookies } from "next/headers";
+
 import { getPlaylistTracks, getUserPlaylists } from "../lib/spotifyWebApi";
 // import { getServerSession } from "next-auth";
 
@@ -44,6 +46,12 @@ function SpotifyPage() {
 	);
 
 	const [selectedPlaylistID, setSelectedPlaylistID] = useState<string>("");
+
+	// Get local cookie value, defaults to sessionID cookie
+	// Unused, maybe remove
+	const getCookieValue = (name: string = "sessionID") =>
+		document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() ||
+		"";
 
 	function storeToSessionStorage(data: string, key: string) {
 		window.sessionStorage.setItem(key, data);
@@ -126,7 +134,7 @@ function SpotifyPage() {
 	// Gets playlist data or undefined from Spotify API
 	// Sets state variable for re-render
 	// Stores data to Session Storage
-	const handleClick = async () => {
+	const handleGetUserPlaylistsClick = async () => {
 		console.log("Handling click!");
 		const endpointData = await getUserPlaylists();
 
@@ -272,7 +280,7 @@ function SpotifyPage() {
 						<button
 							type="button"
 							className="spotify_auth_btn w-full"
-							onClick={() => handleClick()}
+							onClick={() => handleGetUserPlaylistsClick()}
 						>
 							Get User Playlists
 						</button>

@@ -26,6 +26,8 @@
 		"next-themes": "^0.3.0",
 		"react": "^18",
 		"react-dom": "^18",
+		"redis": "^4.6.13",
+		"short-uuid": "^4.2.2",
 		"tailwind-merge": "^2.2.1",
 		"tailwindcss-animate": "^1.0.7"
 	},
