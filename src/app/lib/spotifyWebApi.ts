@@ -23,6 +23,7 @@ export async function getUserPlaylists(
 	let cleanData = undefined;
 
 	const sessionUuid = cookies().get("sessionID")?.value;
+	const userId = cookies().get("userID")?.value;
 
 	// If sessionID doesnt exist then user did not log in
 	// or some crazy thing went wrong
@@ -35,6 +36,20 @@ export async function getUserPlaylists(
 		const errorReturn: ErrorMsg = {
 			errType: "SessionID undefined Error",
 			errMsg: "No sessionID found for getting user playlists. Please authenticate with spotify and try again",
+		};
+
+		return errorReturn;
+	}
+
+	if (userId == undefined) {
+		// TODO: Throw some error?
+		// Return some error message that can be displayed to user
+		// without breaking spotify page where the function is called
+		console.log("No user ID in getUserPlaylists \t PLEASE LOG IN FIRST");
+		// return cleanData; // TEMP: GOTTA REMOVE AND IMPLEMENT REAL ERROR INSTEAD OF RETURNING UNDEF
+		const errorReturn: ErrorMsg = {
+			errType: "UserID undefined Error",
+			errMsg: "No UserID found for getting user playlists. Please authenticate with spotify and try again",
 		};
 
 		return errorReturn;
@@ -71,8 +86,16 @@ export async function getUserPlaylists(
 			console.log("Next is Null!");
 			apiCallCount += 1;
 
+			// response = await fetch(
+			// 	baseUri + `/v1/me/playlists?limit=50&offset=0`,
+			// 	{
+			// 		headers: {
+			// 			Authorization: "Bearer " + accessToken,
+			// 		},
+			// 	}
+			// );
 			response = await fetch(
-				baseUri + `/v1/me/playlists?limit=50&offset=0`,
+				baseUri + `/v1/users/${userId}/playlists?limit=50&offset=0`,
 				{
 					headers: {
 						Authorization: "Bearer " + accessToken,
@@ -94,8 +117,17 @@ export async function getUserPlaylists(
 					`/v1/me/playlists?limit=50&offset=${nextOffset}`
 			);
 
+			// response = await fetch(
+			// 	baseUri + `/v1/me/playlists?limit=50&offset=${nextOffset}`,
+			// 	{
+			// 		headers: {
+			// 			Authorization: "Bearer " + accessToken,
+			// 		},
+			// 	}
+			// );
 			response = await fetch(
-				baseUri + `/v1/me/playlists?limit=50&offset=${nextOffset}`,
+				baseUri +
+					`/v1/users/${userId}/playlists?limit=50&offset=${nextOffset}`,
 				{
 					headers: {
 						Authorization: "Bearer " + accessToken,

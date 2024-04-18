@@ -1,11 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-// import { options } from "../api/auth/[...nextauth]/options";
-import { cookies } from "next/headers";
-
 import { getPlaylistTracks, getUserPlaylists } from "../lib/spotifyWebApi";
-// import { getServerSession } from "next-auth";
 
 import SpotifyPlaylistContainer from "@/components/SpotifyPlaylistContainer";
 // import getSampleData from "../lib/sampleFile";
@@ -33,7 +29,6 @@ const sessionStorageKeys = {
 };
 
 function SpotifyPage() {
-	// const session = await getServerSession(options);
 	// const playlistData = await SpotifyWebApi.getUserPlaylists();
 
 	const [youtubeData, setYoutubeData] = useState<any>(null);
@@ -141,6 +136,12 @@ function SpotifyPage() {
 		if (endpointData !== undefined) {
 			console.log("JSON PLaylist Data:");
 			console.log(endpointData);
+
+			if ("errMsg" in endpointData) {
+				console.log("Found error while getting user playlists");
+				alert(endpointData.errMsg);
+				return;
+			}
 			setPlaylistData(endpointData);
 
 			storeToSessionStorage(

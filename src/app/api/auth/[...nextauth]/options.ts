@@ -10,6 +10,7 @@ const scopes = [
 	"user-read-private",
 	// "playlist-modify-private",
 	"playlist-read-private",
+	"playlist-read-collaborative",
 	"user-library-read",
 	"user-read-recently-played",
 	"user-top-read",
@@ -53,6 +54,7 @@ export const options: NextAuthOptions = {
 				const accessToken = account.access_token;
 				const expireTime = account.expires_at;
 				const uuid = generate();
+				const userId = user.id;
 				process.env.SPOTIFY_ACCESS_TOKEN = accessToken;
 				console.log(
 					"SPOTIFY ACCESS TOKEN: " + process.env.SPOTIFY_ACCESS_TOKEN
@@ -74,6 +76,11 @@ export const options: NextAuthOptions = {
 				);
 
 				cookies().set("sessionID", uuid, {
+					maxAge: 3600,
+					sameSite: "lax",
+				});
+
+				cookies().set("userID", userId, {
 					maxAge: 3600,
 					sameSite: "lax",
 				});
