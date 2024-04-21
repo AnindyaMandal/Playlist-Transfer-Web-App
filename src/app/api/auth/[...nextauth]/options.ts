@@ -55,10 +55,10 @@ export const options: NextAuthOptions = {
 				const expireTime = account.expires_at;
 				const uuid = generate();
 				const userId = user.id;
-				process.env.SPOTIFY_ACCESS_TOKEN = accessToken;
-				console.log(
-					"SPOTIFY ACCESS TOKEN: " + process.env.SPOTIFY_ACCESS_TOKEN
-				);
+				// process.env.SPOTIFY_ACCESS_TOKEN = accessToken;
+				// console.log(
+				// 	"SPOTIFY ACCESS TOKEN: " + process.env.SPOTIFY_ACCESS_TOKEN
+				// );
 				console.log("UUID:\t" + uuid);
 				console.log(account.token_type);
 				console.log(account.scope);

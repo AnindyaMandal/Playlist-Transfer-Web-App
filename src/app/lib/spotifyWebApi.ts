@@ -234,11 +234,53 @@ export async function getUserPlaylists(
 // Look into pagination for this, no reason to get 4k songs at once from playlists.
 export async function getPlaylistTracks(
 	playlistID: string,
-	next: string | null = null
-): Promise<TrackData | undefined> {
-	const accessToken = process.env.SPOTIFY_ACCESS_TOKEN;
+	next: string | null = null,
+	accessToken: string | null = null
+): Promise<TrackData | ErrorMsg | undefined> {
 	const baseUri = "https://api.spotify.com";
 	let cleanData = undefined;
+	const sessionUuid = cookies().get("sessionID")?.value;
+	const userId = cookies().get("userID")?.value;
+
+	// If sessionID doesnt exist then user did not log in
+	// or some crazy thing went wrong
+	if (sessionUuid == undefined) {
+		// TODO: Throw some error?
+		// Return some error message that can be displayed to user
+		// without breaking spotify page where the function is called
+		console.log("No Session ID in getUserPlaylists \t PLEASE LOG IN FIRST");
+		// return cleanData; // TEMP: GOTTA REMOVE AND IMPLEMENT REAL ERROR INSTEAD OF RETURNING UNDEF
+		const errorReturn: ErrorMsg = {
+			errType: "SessionID undefined Error",
+			errMsg: "No sessionID found for getting user playlists. Please authenticate with spotify and try again",
+		};
+
+		return errorReturn;
+	}
+
+	if (userId == undefined) {
+		// TODO: Throw some error?
+		// Return some error message that can be displayed to user
+		// without breaking spotify page where the function is called
+		console.log("No user ID in getUserPlaylists \t PLEASE LOG IN FIRST");
+		// return cleanData; // TEMP: GOTTA REMOVE AND IMPLEMENT REAL ERROR INSTEAD OF RETURNING UNDEF
+		const errorReturn: ErrorMsg = {
+			errType: "UserID undefined Error",
+			errMsg: "No UserID found for getting user playlists. Please authenticate with spotify and try again",
+		};
+
+		return errorReturn;
+	}
+
+	// No access token given, therefore first call of this function, not recursing
+	// Get it from redis using sessionID
+	if (accessToken == null) {
+		console.log("No access token, getting it from Redis...");
+		const redisAccessToken = await getSessionData(sessionUuid);
+		accessToken = redisAccessToken;
+		console.log("Session UUID getUserPlaylists: " + sessionUuid);
+		console.log("Redis Token: " + redisAccessToken);
+	}
 	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!API CALL!!!!!!!!!!!!!!!!!!!!!!!");
 
 	// console.log("Next is: " + next + " type: " + typeof next);
@@ -378,6 +420,12 @@ export async function getPlaylistTracks(
 
 			console.log("NextData from recursion: ");
 			console.log(nextData);
+			// Error check for recursive returns
+			if (nextData == undefined || "errMsg" in nextData) {
+				// Next data that came from recursion has some kind of error
+				// So just pass it up the chain
+				return nextData;
+			}
 			cleanData.next = nextData?.next;
 			Array.prototype.push.apply(cleanData.items, nextData?.items!);
 			console.log("Concatinated Data from recursion: ");
@@ -392,6 +440,13 @@ export async function getPlaylistTracks(
 					error.message +
 					error.name
 			);
+			const errorReturn: ErrorMsg = {
+				errType:
+					"Fetch Error in getUserPlaylists recursion:  " + error.name,
+				errMsg: error.message,
+			};
+
+			return errorReturn;
 		}
 	}
 
