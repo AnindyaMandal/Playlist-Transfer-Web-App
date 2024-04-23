@@ -80,12 +80,7 @@ export const options: NextAuthOptions = {
 					sameSite: "lax",
 				});
 
-				cookies().set("userID", userId, {
-					maxAge: 3600,
-					sameSite: "lax",
-				});
-
-				await addSessionData(uuid.toString(), accessToken!);
+				await addSessionData(uuid.toString(), accessToken!, userId);
 			}
 
 			// if (account?.provider === "google") {

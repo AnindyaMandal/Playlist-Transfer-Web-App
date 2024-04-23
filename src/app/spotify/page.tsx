@@ -196,7 +196,20 @@ function SpotifyPage() {
 		*/
 
 		for (let trackItem of localPlaylistSongs.items) {
-			// mongofindsongexists returns false when nothing found or the URI
+			if (
+				trackItem.trackName == "" ||
+				trackItem.trackName == null ||
+				trackItem.trackName == undefined
+			) {
+				console.error(
+					"handleYouTubeSearchPlist() No trackname for track ID: " +
+						trackItem.trackID
+				);
+
+				continue;
+			}
+
+			// mongofindsongexists returns false when nothing found or the URI to the song
 			let foundYtURI = await mongoFindSongExists(trackItem);
 			if (foundYtURI !== false) {
 				console.log(
@@ -212,6 +225,7 @@ function SpotifyPage() {
 				return artist.name;
 			});
 			let query = trackItem.trackName + " " + artists.join(" ");
+			console.log("YT QUERY SEARCH: " + query);
 			let endpointData = await searchTrackYT(query);
 
 			if (endpointData !== undefined) {
