@@ -1,4 +1,6 @@
 "use server";
+import { error } from "console";
+import { google } from "googleapis";
 
 let apiCallCount = 0;
 const youtubeVidBaseURI = "https://www.youtube.com/watch?v=";
@@ -178,25 +180,34 @@ function findBestMatch(searchQuery: string, data: any) {
 }
 
 // "use server";
-// import { google } from "googleapis";
 // import { authenticate } from "@google-cloud/local-auth";
 
-// const youtube = google.youtube("v3");
-// const path = require("path");
+export async function getYoutubePlaylists() {
+	try {
+		const accessToken = process.env.GOOGLE_ACCESS_TOKEN;
 
-// export async function searchTrackYT(query: string) {
-// 	const auth = await authenticate({
-// 		// /home/anindya/coding_projects/spotify_to_youtube/spotify-to-youtube/keys.json
-// 		// keyfilePath: path.join(__dirname, "../../../../keys.json"),
-// 		keyfilePath: "./src/app/lib/oauth2.keys.json",
+		if (!accessToken) {
+			throw new Error("No youtube access token found");
+		}
 
-// 		scopes: ["https://www.googleapis.com/auth/youtube"],
-// 	});
-// 	google.options({ auth });
+		const oauth2client = new google.auth.OAuth2({});
+		oauth2client.setCredentials({
+			access_token: accessToken,
+		});
 
-// 	const res = await youtube.search.list({
-// 		part: ["snippet"],
-// 		q: query,
-// 	});
-// 	console.log(res.data);
-// }
+		const ytv3 = google.youtube({ version: "v3", auth: oauth2client });
+
+		const response = await ytv3.playlists.list({
+			part: ["snippet"],
+			mine: true,
+			maxResults: 50,
+		});
+		console.log(response.data.items);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.log(
+				"Fetch Error getPlaylistTracks: " + error.message + error.name
+			);
+		}
+	}
+}

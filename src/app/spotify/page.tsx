@@ -8,6 +8,7 @@ import SpotifyPlaylistContainer from "@/components/SpotifyPlaylistContainer";
 import SpotifySongsContainer from "@/components/SpotifySongsContainer";
 
 import { searchTrackYT } from "../lib/ytWebApi";
+import { getYoutubePlaylists } from "../lib/ytWebApi";
 import { TrackItem } from "../definitions/TrackItem";
 import { TrackData } from "../definitions/TrackData";
 import { ArtistData } from "../definitions/ArtistData";
@@ -100,12 +101,18 @@ function SpotifyPage() {
 			return;
 		}
 
+		// Do the following if there is no data in session storage or user wants refreshed data
 		console.log("Getting Songs for: " + playlistID);
 		const endpointData = await getPlaylistTracks(playlistID);
 		console.log("Endpoint Data: " + typeof endpointData);
 		console.log(endpointData);
 
 		if (endpointData !== undefined) {
+			if ("errMsg" in endpointData) {
+				console.log("Found error while getting user playlists");
+				alert(endpointData.errMsg);
+				return;
+			}
 			console.log(selectedPlaylistID);
 			setSelectedPlaylistID(playlistID);
 
@@ -269,6 +276,13 @@ function SpotifyPage() {
 		}
 	};
 
+	const handleYTPlaylistList = async () => {
+		console.log("Getting YT playlists");
+		const res = await getYoutubePlaylists();
+		console.log("YT PLAYLISTS: ");
+		console.log(res);
+	};
+
 	useEffect(() => {
 		console.log("USE EFFECT!");
 		// Get playlist session data from storage
@@ -345,6 +359,16 @@ function SpotifyPage() {
 							}}
 						>
 							Refresh Song List
+						</button>
+						<button
+							type="button"
+							className="youtube_auth_btn w-full"
+							onClick={() => {
+								console.log("Get YT playlists...");
+								handleYTPlaylistList();
+							}}
+						>
+							Get YT Playlists
 						</button>
 					</div>
 					{selectedPlaylistID !== "" &&

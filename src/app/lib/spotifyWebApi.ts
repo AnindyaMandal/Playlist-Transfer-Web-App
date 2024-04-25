@@ -255,11 +255,13 @@ export async function getPlaylistTracks(
 		// TODO: Throw some error?
 		// Return some error message that can be displayed to user
 		// without breaking spotify page where the function is called
-		console.log("No Session ID in getUserPlaylists \t PLEASE LOG IN FIRST");
+		console.log(
+			"No Session ID in getPlaylistTracks \t PLEASE LOG IN FIRST"
+		);
 		// return cleanData; // TEMP: GOTTA REMOVE AND IMPLEMENT REAL ERROR INSTEAD OF RETURNING UNDEF
 		const errorReturn: ErrorMsg = {
 			errType: "SessionID undefined Error",
-			errMsg: "No sessionID found for getting user playlists. Please authenticate with spotify and try again",
+			errMsg: "No sessionID found for getting playlist tracks. Please authenticate with spotify and try again",
 		};
 
 		return errorReturn;
@@ -271,7 +273,7 @@ export async function getPlaylistTracks(
 		console.log("No access token, getting it from Redis...");
 		const redisAccessToken = await getSessionToken(sessionUuid);
 		accessToken = redisAccessToken;
-		console.log("Session UUID getUserPlaylists: " + sessionUuid);
+		console.log("Session UUID getPlaylistTracks: " + sessionUuid);
 		console.log("Redis Token: " + redisAccessToken);
 	}
 	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!API CALL!!!!!!!!!!!!!!!!!!!!!!!");
@@ -279,7 +281,9 @@ export async function getPlaylistTracks(
 	// console.log("Next is: " + next + " type: " + typeof next);
 	try {
 		if (!accessToken) {
-			throw new Error("Access token not set");
+			throw new Error(
+				"Access token not set. Invalid access token.\nAuthenticate and try again."
+			);
 		}
 
 		if (apiCallCount > 10) {
@@ -395,7 +399,17 @@ export async function getPlaylistTracks(
 			);
 		}
 	}
+
+	// TODO:
+	// No reason to have 2 try catch blocks, just merge the recursion bit with the inital call
 	try {
+		// Remember to remove this access token check when u merge the try catches
+		// ALSO REMEMBER TO DO THIS FOR GET PLAYLISTS!
+		if (!accessToken) {
+			throw new Error(
+				"Access token not set. Invalid access token.\nAuthenticate and try again."
+			);
+		}
 		if (!cleanData) throw new Error("Clean data is undefined");
 		// There are tracks that exist in next
 		// we need to keep going and do fetch req until next is null
