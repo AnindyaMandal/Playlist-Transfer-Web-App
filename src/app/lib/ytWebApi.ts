@@ -1,6 +1,8 @@
 "use server";
 import { error } from "console";
 import { google } from "googleapis";
+import { YouTubePlaylistsResource } from "../definitions/YouTubePlaylistsResource";
+import { TrackData } from "../definitions/TrackData";
 
 let apiCallCount = 0;
 const youtubeVidBaseURI = "https://www.youtube.com/watch?v=";
@@ -155,6 +157,7 @@ function findBestMatch(searchQuery: string, data: any) {
 	});
 
 	let vidID = data.items[0].id.videoId;
+	let vidData = data.items[0];
 
 	// Check if the result titles have restricted words, if so check the next one
 	// breaks as soon as it finds a suitable one
@@ -172,16 +175,25 @@ function findBestMatch(searchQuery: string, data: any) {
 		}
 
 		vidID = data.items[i].id.videoId;
+		vidData = data.items[i];
 		break;
 	}
 
 	console.log("Link:\t" + youtubeVidBaseURI + vidID);
-	return youtubeVidBaseURI + vidID;
+	// return youtubeVidBaseURI + vidID;
+	const returnData = {
+		ytURI: youtubeVidBaseURI + vidID,
+		ytData: vidData,
+	};
+
+	return returnData;
 }
 
 // "use server";
 // import { authenticate } from "@google-cloud/local-auth";
 
+// Gets user's created playlists from youtube
+// User must be authenticated to youtube for this to work
 export async function getYoutubePlaylists() {
 	try {
 		const accessToken = process.env.GOOGLE_ACCESS_TOKEN;
@@ -208,6 +220,136 @@ export async function getYoutubePlaylists() {
 			console.log(
 				"Fetch Error getPlaylistTracks: " + error.message + error.name
 			);
+		}
+	}
+}
+
+export async function addYoutubePlaylist(playlistTitle: string) {
+	try {
+		const accessToken = process.env.GOOGLE_ACCESS_TOKEN;
+
+		if (!accessToken) {
+			throw new Error("No youtube access token found");
+		}
+
+		const oauth2client = new google.auth.OAuth2({});
+		oauth2client.setCredentials({
+			access_token: accessToken,
+		});
+
+		const ytv3 = google.youtube({ version: "v3", auth: oauth2client });
+
+		let playlistId = null;
+
+		const res = await ytv3.playlists.insert({
+			part: ["snippet"],
+			requestBody: {
+				snippet: {
+					title: playlistTitle,
+				},
+			},
+		});
+		// Callback
+		// (err, res) => {
+		// 	if (err) {
+		// 		console.error(err);
+		// 		throw err;
+		// 	}
+		// 	console.log(`The response is: `);
+		// 	console.log(res?.data);
+		// 	console.log(res?.status);
+		// 	console.log(res?.statusText);
+		// 	playlistId = res?.data.id;
+		// };
+		console.log(`The response is: `);
+		// console.log(res?.data);
+		console.log(res?.status);
+		console.log(res?.statusText);
+		playlistId = res?.data.id;
+
+		console.log("Got PlaylistID: " + playlistId);
+		return playlistId;
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.log("Fetch Error: " + error.message + error.name);
+			console.log(error);
+		}
+	}
+}
+
+export async function addSpotifyPlistYoutube(
+	playlistTitle: string,
+	spotifyPlaylist: TrackData
+) {
+	try {
+		const accessToken = process.env.GOOGLE_ACCESS_TOKEN;
+
+		if (!accessToken) {
+			throw new Error("No youtube access token found");
+		}
+
+		// const playlistId = await addYoutubePlaylist(playlistTitle);
+		const playlistId = "PLo09mDgT9n2VlqwXMXwBl2KKZ85eRbswP";
+		console.log("playlistID: " + playlistId);
+		const oauth2client = new google.auth.OAuth2({});
+		oauth2client.setCredentials({
+			access_token: accessToken,
+		});
+
+		const ytv3 = google.youtube({ version: "v3", auth: oauth2client });
+
+		for (let trackItem of spotifyPlaylist.items) {
+			if (trackItem.ytURI == "") {
+				console.log("No YouTube URI for track: " + trackItem.trackName);
+				continue;
+			}
+			const uri = trackItem.ytURI;
+			const videoId = uri.split("/watch?v=")[1];
+			console.log("\nURI: " + uri);
+			console.log("VidID: " + videoId);
+
+			// const params = {
+			// 	snippet: {
+			// 		playlistId: playlistId,
+			// 		resourceId: {
+			// 			kind: "youtube#video",
+			// 			videoId: videoId,
+			// 		},
+			// 	},
+			// };
+
+			const res = await ytv3.playlistItems.insert({
+				part: ["snippet"],
+				requestBody: {
+					snippet: {
+						playlistId: playlistId,
+						resourceId: {
+							kind: "youtube#video",
+							videoId: videoId,
+						},
+					},
+				},
+			});
+
+			console.log("Added Track to playlist...vidID: " + videoId);
+			console.log(res.status);
+			// CALLBACK
+			// ,
+			// 	(err, res) => {
+			// 		if (err) {
+			// 			console.error(err);
+			// 			throw err;
+			// 		}
+			// 		console.log(`The response is: `);
+			// 		console.log(res?.data);
+			// 		console.log(res?.status);
+			// 		console.log(res?.statusText);
+			// 	}
+		}
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.log("Fetch Error: " + error.message + error.name);
+			console.log(error);
 		}
 	}
 }

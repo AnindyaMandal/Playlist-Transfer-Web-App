@@ -59,13 +59,11 @@ export const options: NextAuthOptions = {
 			if (account?.provider === "spotify") {
 				const accessToken = account.access_token;
 				const expireTime = account.expires_at;
-				const uuid = generate();
 				const userId = user.id;
 				// process.env.SPOTIFY_ACCESS_TOKEN = accessToken;
 				// console.log(
 				// 	"SPOTIFY ACCESS TOKEN: " + process.env.SPOTIFY_ACCESS_TOKEN
 				// );
-				console.log("UUID:\t" + uuid);
 				console.log(account.token_type);
 				console.log(account.scope);
 				console.log("Current: " + Math.round(Date.now() / 1000));
@@ -77,14 +75,17 @@ export const options: NextAuthOptions = {
 
 				console.log(user);
 				console.log(profile);
-				console.log(
-					"existing session cookie: " + cookies().get("sessionID")
-				);
 
-				cookies().set("sessionID", uuid, {
-					maxAge: 3600,
-					sameSite: "lax",
-				});
+				let uuid = cookies().get("sessionID")?.value;
+				console.log("existing session cookie ID: " + uuid);
+				if (uuid == undefined) {
+					uuid = generate();
+					console.log("No existing cookie...\nNew Cookie: " + uuid);
+					cookies().set("sessionID", uuid, {
+						maxAge: 3600,
+						sameSite: "lax",
+					});
+				}
 
 				await addSessionData(uuid.toString(), accessToken!, userId);
 			}
@@ -99,6 +100,23 @@ export const options: NextAuthOptions = {
 				console.log(account.scope);
 				console.log(account.expires_at);
 				console.log(account.refresh_token);
+				console.log(
+					"Difference: ",
+					account.expires_at! - Math.round(Date.now() / 1000)
+				);
+
+				let uuid = cookies().get("sessionID")?.value;
+				console.log("existing session cookie ID: " + uuid);
+				if (uuid == undefined) {
+					uuid = generate();
+					console.log("No existing cookie...\nNew Cookie: " + uuid);
+					cookies().set("sessionID", uuid, {
+						maxAge: 3600,
+						sameSite: "lax",
+					});
+				}
+
+				await addSessionData(uuid.toString(), null, null, accessToken);
 			}
 			return true;
 		},

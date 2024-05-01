@@ -7,8 +7,9 @@ import SpotifyPlaylistContainer from "@/components/SpotifyPlaylistContainer";
 // import getSampleData from "../lib/sampleFile";
 import SpotifySongsContainer from "@/components/SpotifySongsContainer";
 
-import { searchTrackYT } from "../lib/ytWebApi";
+import { addSpotifyPlistYoutube, searchTrackYT } from "../lib/ytWebApi";
 import { getYoutubePlaylists } from "../lib/ytWebApi";
+import { addYoutubePlaylist } from "../lib/ytWebApi";
 import { TrackItem } from "../definitions/TrackItem";
 import { TrackData } from "../definitions/TrackData";
 import { ArtistData } from "../definitions/ArtistData";
@@ -238,7 +239,8 @@ function SpotifyPage() {
 			if (endpointData !== undefined) {
 				console.log("JSON YT Data:");
 				console.log(endpointData);
-				trackItem.ytURI = endpointData;
+				trackItem.ytURI = endpointData.ytURI;
+				trackItem.ytData = endpointData.ytData;
 				mongoAddSongData(trackItem);
 			} else {
 				console.log("Something went wrong fetching YT playlist data");
@@ -276,9 +278,15 @@ function SpotifyPage() {
 		}
 	};
 
+	// DEBUG METHOD TO CHECK YOUTUBE API CALLS
+	// THINK ABOUT HOW TO IMPLEMENT THIS GRACEFULLY
+	// DO NOT FORGET TO REMOVE
 	const handleYTPlaylistList = async () => {
 		console.log("Getting YT playlists");
-		const res = await getYoutubePlaylists();
+		const res = await addSpotifyPlistYoutube(
+			selectedPlaylistTag,
+			selectedPlaylistSongs
+		);
 		console.log("YT PLAYLISTS: ");
 		console.log(res);
 	};
