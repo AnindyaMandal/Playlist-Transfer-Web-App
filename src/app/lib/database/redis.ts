@@ -2,8 +2,9 @@ import { handleError } from "@/lib/utils";
 import { createClient } from "redis";
 
 const client = createClient({
-	username: "default",
-	password: process.env.REDIS_DEFAULT_PASSWORD,
+	// username: "default",
+	// username: process.env.REDIS_USERNAME,
+	// password: process.env.REDIS_DEFAULT_PASSWORD,
 	socket: {
 		host: process.env.REDIS_LOCAL_HOST,
 		port: parseInt(process.env.REDIS_LOCAL_PORT!),

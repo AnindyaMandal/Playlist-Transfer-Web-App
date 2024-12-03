@@ -148,24 +148,29 @@ export async function getUserPlaylists(
 			console.log(response.headers);
 			throw new Error(response.statusText);
 		}
+		console.log(response.status);
+		console.log(response.headers);
 		const data = await response.json();
 
-		// console.log(data);
+		console.log(data);
 		console.log("Total Playlists: " + data.total);
 		console.log("API Call Count: " + apiCallCount);
+		console.log("First name: " + data.items[0].name);
 		cleanData = {
 			next: data.next,
 			total: data.total,
-			items: data.items.map((element: any): PlaylistItem => {
-				const items = {
-					name: element.name,
-					description: element.description,
-					id: element.id,
-					track_href: element.tracks.href,
-					track_total: element.tracks.total,
-				};
-				return items;
-			}),
+			items: data.items
+				.filter((item: any) => item !== null)
+				.map((element: any): PlaylistItem => {
+					const items = {
+						name: element.name,
+						description: element.description,
+						id: element.id,
+						track_href: element.tracks.href,
+						track_total: element.tracks.total,
+					};
+					return items;
+				}),
 		};
 
 		// console.log("Clean Data:");
